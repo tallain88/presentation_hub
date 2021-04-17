@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #5F2EEA;
+    --secondary-color: #2A00A2;
+    --text-primary-color: black;
+    --text-secondary-color: whitesmoke;
+}
+
+
+.header {
+    background-color: var(--primary-color);
+}
+
+.footer {
+    background-color: var(--primary-color);
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+}
+
+.button-secondary {
+    background-color: var(--secondary-color);
+}
+
+.panel-primary {
+    background-color: var(--primary-color);
+}
+
+.panel-secondary {
+    background-color: var(--secondary-color);
+}
+
+.text-primary-bold {
+    font-weight: 700;
+    color: var(--text-primary-color);
+}
+
+.text-secondary-bold {
+    font-weight: 700;
+    color: var(--text-secondary-color);
+}
+
+a, a:visited {
+    color: var(--text-secondary-color)
+}
+
+a:hover {
+    color: azure;
+}
