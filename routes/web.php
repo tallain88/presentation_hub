@@ -20,4 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/presentation/{link}', [App\Http\Controllers\PresentationController::class, 'show'])->name('show');
 Route::get('/home', [App\Http\Controllers\PresentationController::class, 'index'])->name('presentations');

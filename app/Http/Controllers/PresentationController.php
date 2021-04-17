@@ -15,6 +15,7 @@ class PresentationController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**
@@ -35,7 +36,23 @@ class PresentationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate request
+        $validated = $request->validate([
+            'id' => 'required',
+            'title' => 'required',
+        ]);
+
+        //get user
+        $user = User::findOrFail($validated->id);
+
+        //make unique link
+
+        //save new presentation object
+        $presentation = new Presentation;
+        $presentation->title = $request->title;
+        $presentation->link = (string) Str::uuid();
+        $presentation->associate($user);
+        $presentation->save();
     }
 
     /**
@@ -44,9 +61,12 @@ class PresentationController extends Controller
      * @param  \App\Models\Presentation  $presentation
      * @return \Illuminate\Http\Response
      */
-    public function show(Presentation $presentation)
+    public function show($link)
     {
-        //
+        $presentation = Presentation::where('link', $link)->get();
+        //This method displays the selected URL associated presentation
+        return view('presentation', ['presentation' => $presentation])
+
     }
 
     /**
@@ -80,6 +100,7 @@ class PresentationController extends Controller
      */
     public function destroy(Presentation $presentation)
     {
-        //
+        // delete presentation for user
+        Presentation::find($presentation->id)->delete();
     }
 }
