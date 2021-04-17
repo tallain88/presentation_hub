@@ -7,7 +7,7 @@
             <img class="center-block" height="400px" src="images/login_image_1.svg">
         </div>
         <div class="col-lg-4">
-            <h2 class="text-dark-bold bold">{{ __('Welcome to Presentation-Nexus!') }}</h2>
+            <h2 class="text-dark-bold bold">{{ __('Welcome to ') }} {{ config('app.name', 'Laravel') }} {{ __('!')}}</h2>
             <div class="card bg-main">
                 <div class="card-body">
                     <h2 class="text-secondary-bold text-center">{{ __('Register an account') }}</h2>
