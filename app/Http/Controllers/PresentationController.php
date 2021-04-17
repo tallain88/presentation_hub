@@ -65,8 +65,7 @@ class PresentationController extends Controller
     {
         $presentation = Presentation::where('link', $link)->get();
         //This method displays the selected URL associated presentation
-        return view('presentation', ['presentation' => $presentation])
-
+        return view('presentation', ['presentation' => $presentation]);
     }
 
     /**
