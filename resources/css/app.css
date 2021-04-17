@@ -5,7 +5,6 @@
     --text-secondary-color: whitesmoke;
 }
 
-
 .header {
     background-color: var(--primary-color);
 }
@@ -35,15 +34,5 @@
     color: var(--text-primary-color);
 }
 
-.text-secondary-bold {
-    font-weight: 700;
-    color: var(--text-secondary-color);
-}
 
-a, a:visited {
-    color: var(--text-secondary-color)
-}
 
-a:hover {
-    color: azure;
-}
