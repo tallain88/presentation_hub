@@ -1,0 +1,1 @@
+const emojis = require('emojis-list')

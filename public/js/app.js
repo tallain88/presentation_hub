@@ -1889,6 +1889,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -1908,6 +1909,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6781,7 +6787,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n@media all and (max-width: 990px) {\n.container-fluid[data-v-5e7617f2] {\n            top: -100px;\n}\n}\n    /* margin-bottom: 50px; */\n.chat[data-v-5e7617f2] {\n    height: 59%;\n    margin-bottom: 35px;\n}\n.input[data-v-5e7617f2] {\n    height: 20%;\n}\n.btn[data-v-5e7617f2] {\n    width: 100%;\n    height: 5%;\n}\ntextarea[data-v-5e7617f2] {\n    font-size: 20px;\n    width: 100%;\n    resize: none;\n    border-top-left-radius: 10px;\n    border-bottom-right-radius: 10px;\n    color: whitesmoke;\n}\ntextarea[data-v-5e7617f2]:focus {\n    outline-width: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n@media all and (max-width: 990px) {\n.container-fluid[data-v-5e7617f2] {\n        top: -100px;\n}\n}\n.chat[data-v-5e7617f2] {\n    height: 59%;\n    margin-bottom: 15px;\n}\n.input[data-v-5e7617f2] {\n    height: 20%;\n}\n.send[data-v-5e7617f2] {\n    width: 100%;\n    height: 50px;\n}\ntextarea[data-v-5e7617f2] {\n    font-size: 20px;\n    width: 100%;\n    resize: none;\n    border-top-left-radius: 10px;\n    border-bottom-right-radius: 10px;\n    color: whitesmoke;\n}\ntextarea[data-v-5e7617f2]:focus {\n    outline-width: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6805,7 +6811,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.panel[data-v-15e51b50] {\n    display: none;\n    z-index: 20;\n    position: fixed;\n}\n.card[data-v-15e51b50] {\n    height: 81%;\n}\n.btn[data-v-15e51b50] {\n    width: 90%;\n}\n.card[data-v-15e51b50] {\n    height: 80%;\n}\n.title[data-v-15e51b50] {\n    color: whitesmoke;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n@media screen and (max-width: 1450px) {\n.panel[data-v-15e51b50] {\n        position: fixed;\n        z-index: 20;\n        min-width: 250px;\n}\n}\n.card[data-v-15e51b50] {\n    height: 81%;\n}\n.btn[data-v-15e51b50] {\n    width: 90%;\n}\n.card[data-v-15e51b50] {\n    height: 80%;\n}\n.title[data-v-15e51b50] {\n    color: whitesmoke;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39213,18 +39219,33 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container-fluid col-lg-3" }, [
-      _c("div", { staticClass: "card chat bg-gray" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "list" })
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card chat bg-gray chat-collapse",
+          attrs: { id: "chat-collapse" }
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "list" })
+          ])
+        ]
+      ),
       _vm._v(" "),
-      _c("textarea", {
-        staticClass: "input bg-main",
-        attrs: { placeholder: "Type here to chat..." }
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-secondary" })
+      _c(
+        "div",
+        { staticClass: "chat-collapse", attrs: { id: "chat-collapse" } },
+        [
+          _c("textarea", {
+            staticClass: "input bg-main",
+            attrs: { placeholder: "Type here to chat..." }
+          }),
+          _vm._v(" "),
+          _c("button", { staticClass: "btn send btn-secondary" }, [
+            _vm._v("Send")
+          ])
+        ]
+      )
     ])
   }
 ]
@@ -39270,10 +39291,27 @@ var staticRenderFns = [
         _c("button", { staticClass: "btn btn-third" }, [_vm._v("Copy Link")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row mb-4" }, [
+      _c("div", { staticClass: "row mb-3" }, [
         _c("button", { staticClass: "btn btn-third" }, [
           _vm._v("Select Presentation Source")
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-4" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-third collapse-chat",
+            attrs: {
+              "data-toggle": "collapse",
+              href: "#chat-collapse",
+              "data-target": "#chat-collapse",
+              "aria-expanded": "false",
+              "aria-controls": "chat-collapse"
+            }
+          },
+          [_vm._v("Toggle chat")]
+        )
       ])
     ])
   }

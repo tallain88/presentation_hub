@@ -120,3 +120,40 @@ hr {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+
+.controls-collapse {
+    overflow-y: scroll;
+    @media screen and (max-width: 1450px) {
+        &:not(.show) {
+          display: none;
+        }
+    }
+}
+  
+.controls-collapsing {
+    height: 0;
+    overflow: hidden;
+    @include transition($controls-transition-collapse);
+}
+
+
+.collapse-controls {
+    @media screen and (min-width: 1450px) {
+        display: none;
+    }
+}
+
+.chat-collapse {
+    @media screen and (max-width: 1450px) {
+        &:not(.show) {
+          display: none;
+        }
+    }
+}
+  
+.chat-collapsing {
+    height: 0;
+    overflow: hidden;
+    @include transition($controls-transition-collapse);
+}

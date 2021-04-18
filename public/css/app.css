@@ -22067,4 +22067,50 @@ hr {
   overflow-x: hidden;
 }
 
+.controls-collapse {
+  overflow-y: scroll;
+}
+
+@media screen and (max-width: 1450px) {
+  .controls-collapse:not(.show) {
+    display: none;
+  }
+}
+
+.controls-collapsing {
+  height: 0;
+  overflow: hidden;
+  transition: height 0s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controls-collapsing {
+    transition: none;
+  }
+}
+
+@media screen and (min-width: 1450px) {
+  .collapse-controls {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .chat-collapse:not(.show) {
+    display: none;
+  }
+}
+
+.chat-collapsing {
+  height: 0;
+  overflow: hidden;
+  transition: height 0s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-collapsing {
+    transition: none;
+  }
+}
+
 

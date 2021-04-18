@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
-        "@fortawesome/vue-fontawesome": "^3.0.0-3"
+        "@fortawesome/vue-fontawesome": "^3.0.0-3",
+        "emojis-list": "^3.0.0"
     }
 }

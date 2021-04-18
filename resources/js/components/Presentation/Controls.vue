@@ -5,8 +5,11 @@
                 <div class="row mb-3">
                     <button class="btn btn-third">Copy Link</button>
                 </div>
-                <div class="row mb-4">
+                <div class="row mb-3">
                     <button class="btn btn-third">Select Presentation Source</button>
+                </div>
+                <div class="row mb-4">
+                    <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="false" aria-controls="chat-collapse">Toggle chat</button>
                 </div>
            </div>
            <div class="row">
@@ -20,10 +23,12 @@
 </template>
 
 <style scoped>
-    .panel {
-        display: none;
-        z-index: 20;
-        position: fixed;
+    @media screen and (max-width: 1450px) {
+        .panel {
+            position: fixed;
+            z-index: 20;
+            min-width: 250px;
+        }
     }
     .card {
         height: 81%;

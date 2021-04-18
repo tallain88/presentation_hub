@@ -1,33 +1,34 @@
 <template>
     <div class="container-fluid col-lg-3">
-        <div class="card chat bg-gray">
+        <div class="card chat bg-gray chat-collapse" id="chat-collapse">
             <div class="card-body">
                 <div class="list">
                 </div>
             </div>
         </div>
+        <div class="chat-collapse" id="chat-collapse">
         <textarea placeholder="Type here to chat..." class="input bg-main"/>
-        <button class="btn btn-secondary"></button>
+        <button class="btn send btn-secondary">Send</button>
+        </div>
     </div>
 </template>
 
 <style scoped>
-        @media all and (max-width: 990px) {
-            .container-fluid {
-                top: -100px;
-            }
+    @media all and (max-width: 990px) {
+        .container-fluid {
+            top: -100px;
         }
-        /* margin-bottom: 50px; */
+    }
     .chat {
         height: 59%;
-        margin-bottom: 35px;
+        margin-bottom: 15px;
     }
     .input {
         height: 20%;
     }
-    .btn {
+    .send {
         width: 100%;
-        height: 5%;
+        height: 50px;
     }
     textarea {
         font-size: 20px;
