@@ -21950,4 +21950,90 @@ a.text-dark:focus {
   }
 }
 
+.bg-main {
+  background-color: #5F2EEA !important;
+}
+
+.navbar-primary {
+  background-color: #5F2EEA;
+}
+
+.navbar-primary .navbar-brand,
+.navbar-primary .navbar-text {
+  color: whitesmoke;
+}
+
+.navbar-primary .navbar-nav .nav-link {
+  color: whitesmoke;
+}
+
+.navbar-primary .nav-item.active .nav-link,
+.navbar-primary .nav-item:hover .nav-link {
+  color: #767676;
+}
+
+#app {
+  height: 100%;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+a,
+a:visited {
+  color: whitesmoke;
+}
+
+a:hover {
+  color: azure;
+}
+
+.btn-secondary,
+.btn-secondary:active,
+.btn-secondary:visited {
+  background-color: #2A00A2 !important;
+}
+
+.btn-secondary:hover {
+  background-color: #BF00AC !important;
+}
+
+.py-4 {
+  height: 100%;
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fill {
+  min-height: 100%;
+  height: 100%;
+}
+
+.login {
+  top: 100px;
+}
+
+.text-secondary {
+  color: whitesmoke;
+}
+
+.text-secondary-bold {
+  font-weight: bolder;
+  color: whitesmoke;
+}
+
+.footer {
+  background-color: #5F2EEA;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  z-index: 0;
+}
+
 
