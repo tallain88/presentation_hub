@@ -18,8 +18,21 @@ window.Vue = require('vue').default;
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('splash-demo', require('./components/SplashDemoComponent.vue').default);
-Vue.component('splash-controls', require('./components/SplashActionsComponent.vue').default);
+// Base
+Vue.component('panel', require('./components/common/panel.vue').default);
+
+// Splash Page Components
+Vue.component('splash-demo', require('./components/SplashPage/Demo.vue').default);
+Vue.component('splash-controls', require('./components/SplashPage/Actions.vue').default);
+
+// Presentation
+Vue.component('presentation-controls', require('./components/Presentation/Controls.vue').default);
+Vue.component('presentation-effects', require('./components/Presentation/Effects.vue').default);
+Vue.component('presentation-user-list', require('./components/Presentation/UserList.vue').default);
+Vue.component('presentation-user-listing', require('./components/Presentation/UserListing.vue').default);
+// Vue.component('presentation-reactions', require('./components/Presentation/Reactions.vue').default);
+// Vue.component('presentation-video', require('./components/Presentation/Video.vue').default);
+// Vue.component('presentation-chat', require('./components/Presentation/Chat.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

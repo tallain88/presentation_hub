@@ -12,6 +12,10 @@
     background-color: $primary-color !important;
 }
 
+.bg-second {
+    background-color: $secondary-color !important;
+}
+
 .navbar-primary {
     background-color: $primary-color;
 }
@@ -56,6 +60,14 @@ a:hover {
     background-color: #BF00AC !important;
 }
 
+.btn-third, .btn-third:active, .btn-third:visited {
+    background-color: white !important;
+}
+
+.btn-third:hover {
+    background-color: gray !important;
+}
+
 .py-4 {
     height: 100%;
 }
@@ -89,5 +101,18 @@ a:hover {
     height: 60px;
     position: fixed;
     bottom: 0;
-    z-index: 0;
+    z-index: -1;
+}
+
+.label {
+    color: whitesmoke;
+}
+
+hr {
+    background-color: whitesmoke;
+}
+
+.list {
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

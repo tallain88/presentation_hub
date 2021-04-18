@@ -78,7 +78,10 @@
         <main class="py-4">
             @yield('content')
         </main>
-        <div class="container-fluid footer"></div>
+
+        {{-- @if (in_array(Route::current()->getName(), ['login', 'register', 'verify', 'home']))) --}}
+            <div class="container-fluid footer"></div>
+        {{-- @endif --}}
     </div>
 </body>
 </html>

@@ -9,7 +9,7 @@
         <div class="row mb-2 justify-content-center">
             <button class="presentation-btn btn btn-secondary">
                     Share a presentation
-                </button>
+            </button>
         </div>
         <div class="row justify-content-center">
             <button class="presentation-btn btn btn-secondary">
@@ -61,4 +61,3 @@
         }
     }
 </script>
-

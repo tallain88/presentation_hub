@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Presentation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresentationController extends Controller
 {
@@ -14,8 +15,7 @@ class PresentationController extends Controller
      */
     public function index()
     {
-        //
-        
+        return view('presentation', ['host_id' => Auth::id()]);
     }
 
     /**
