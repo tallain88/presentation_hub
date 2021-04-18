@@ -10,10 +10,8 @@
     #video {
         z-index: 10;
     }
-    @media all and (max-width: 800px) {
-        .container {
-            height: 1%;
-        }
+    .container {
+        margin-bottom: 10px;
     }
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-   <div class="panel card bg-second">
+   <div class="panel col-lg-2 card bg-second">
         <div class="card-body">
            <div class="container-fluid">
                 <div class="row mb-3">
@@ -22,6 +22,7 @@
 <style scoped>
     .panel {
         display: none;
+        z-index: 20;
         position: fixed;
     }
     .card {

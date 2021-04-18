@@ -12,12 +12,12 @@
 </template>
 
 <style scoped>
-    .container-fluid {
-        @media all and (max-width: 800px) {
-            top: -100px;
+        @media all and (max-width: 990px) {
+            .container-fluid {
+                top: -100px;
+            }
         }
-        margin-bottom: 50px;
-    }
+        /* margin-bottom: 50px; */
     .chat {
         height: 59%;
         margin-bottom: 35px;

@@ -1948,6 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -2092,8 +2093,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -6782,7 +6781,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-5e7617f2] {\n@media all and (max-width: 800px) {\n        top: -100px;\n}\n    margin-bottom: 50px;\n}\n.chat[data-v-5e7617f2] {\n    height: 59%;\n    margin-bottom: 35px;\n}\n.input[data-v-5e7617f2] {\n    height: 20%;\n}\n.btn[data-v-5e7617f2] {\n    width: 100%;\n    height: 5%;\n}\ntextarea[data-v-5e7617f2] {\n    font-size: 20px;\n    width: 100%;\n    resize: none;\n    border-top-left-radius: 10px;\n    border-bottom-right-radius: 10px;\n    color: whitesmoke;\n}\ntextarea[data-v-5e7617f2]:focus {\n    outline-width: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n@media all and (max-width: 990px) {\n.container-fluid[data-v-5e7617f2] {\n            top: -100px;\n}\n}\n    /* margin-bottom: 50px; */\n.chat[data-v-5e7617f2] {\n    height: 59%;\n    margin-bottom: 35px;\n}\n.input[data-v-5e7617f2] {\n    height: 20%;\n}\n.btn[data-v-5e7617f2] {\n    width: 100%;\n    height: 5%;\n}\ntextarea[data-v-5e7617f2] {\n    font-size: 20px;\n    width: 100%;\n    resize: none;\n    border-top-left-radius: 10px;\n    border-bottom-right-radius: 10px;\n    color: whitesmoke;\n}\ntextarea[data-v-5e7617f2]:focus {\n    outline-width: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6806,7 +6805,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.panel[data-v-15e51b50] {\n    display: none;\n    position: fixed;\n}\n.card[data-v-15e51b50] {\n    height: 81%;\n}\n.btn[data-v-15e51b50] {\n    width: 90%;\n}\n.card[data-v-15e51b50] {\n    height: 80%;\n}\n.title[data-v-15e51b50] {\n    color: whitesmoke;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.panel[data-v-15e51b50] {\n    display: none;\n    z-index: 20;\n    position: fixed;\n}\n.card[data-v-15e51b50] {\n    height: 81%;\n}\n.btn[data-v-15e51b50] {\n    width: 90%;\n}\n.card[data-v-15e51b50] {\n    height: 80%;\n}\n.title[data-v-15e51b50] {\n    color: whitesmoke;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6902,7 +6901,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#video[data-v-61cf93d1] {\n    z-index: 10;\n}\n@media all and (max-width: 800px) {\n.container[data-v-61cf93d1] {\n        height: 1%;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#video[data-v-61cf93d1] {\n    z-index: 10;\n}\n.container[data-v-61cf93d1] {\n    margin-bottom: 10px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39251,7 +39250,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "panel card bg-second" }, [
+  return _c("div", { staticClass: "panel col-lg-2 card bg-second" }, [
     _c("div", { staticClass: "card-body" }, [
       _vm._m(0),
       _vm._v(" "),
