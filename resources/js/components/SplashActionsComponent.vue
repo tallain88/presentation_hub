@@ -26,6 +26,7 @@
     }
     .text {
         font-weight: bold;
+        text-align: center;
     }
 
     .title {
