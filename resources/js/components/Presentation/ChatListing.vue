@@ -1,6 +1,6 @@
 <template>
     <div class="user-listing mb-1 row">
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span class="label">{{ username }}</span>
         </div>
         <div class="col-sm-3">

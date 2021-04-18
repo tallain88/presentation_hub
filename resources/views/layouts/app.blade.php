@@ -79,9 +79,7 @@
             @yield('content')
         </main>
 
-        {{-- @if (in_array(Route::current()->getName(), ['login', 'register', 'verify', 'home']))) --}}
-            <div class="container-fluid footer"></div>
-        {{-- @endif --}}
     </div>
+    <div class="container-fluid footer"></div>
 </body>
 </html>

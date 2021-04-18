@@ -4,10 +4,12 @@
 <div class="container-fluid fill">
     <div class="row fill">
         @if ($host_id === auth()->id())
-            <presentation-controls>
-            </presentation-controls>
+            <presentation-controls></presentation-controls>
         @else
-       @endif
+            {{-- <presentation-reactions></presentation-reactions> --}}
+        @endif
+            <presentation-video></presentation-video>
+            <presentation-chat></presentation-chat>
     </div>
 </div>
 @endsection

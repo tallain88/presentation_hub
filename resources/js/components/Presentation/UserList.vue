@@ -9,6 +9,9 @@
 </template>
 
 <style scoped>
+    .list {
+        min-height: 100px;
+    }
 </style>
 
 <script>
