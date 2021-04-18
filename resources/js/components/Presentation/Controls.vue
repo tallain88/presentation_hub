@@ -1,5 +1,5 @@
 <template>
-   <div class="panel col-lg-2 card bg-second">
+   <div class="col-lg-2 card bg-second">
         <div class="card-body">
            <div class="container-fluid">
                 <div class="row mb-3">
@@ -24,7 +24,7 @@
 
 <style scoped>
     @media screen and (max-width: 1450px) {
-        .panel {
+        .card {
             position: fixed;
             z-index: 20;
             min-width: 250px;

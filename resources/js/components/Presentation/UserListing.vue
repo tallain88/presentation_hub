@@ -1,9 +1,9 @@
 <template>
     <div class="user-listing mb-1 row">
-        <div class="col-sm-9">
+        <div class="col-sm-8">
             <span class="label">{{ username }}</span>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <img class="icon" src="images/account.svg"/>
             <img class="icon" src="images/close.svg"/>
         </div>

@@ -14,13 +14,17 @@
 </template>
 
 <style scoped>
+    .container-fluid {
+        height: 80%;
+    }
     @media all and (max-width: 990px) {
         .container-fluid {
             top: -100px;
+            height: 30%;
         }
     }
     .chat {
-        height: 59%;
+        height: 80%;
         margin-bottom: 15px;
     }
     .input {

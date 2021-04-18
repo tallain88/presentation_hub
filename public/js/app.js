@@ -1890,6 +1890,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -6787,7 +6791,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n@media all and (max-width: 990px) {\n.container-fluid[data-v-5e7617f2] {\n        top: -100px;\n}\n}\n.chat[data-v-5e7617f2] {\n    height: 59%;\n    margin-bottom: 15px;\n}\n.input[data-v-5e7617f2] {\n    height: 20%;\n}\n.send[data-v-5e7617f2] {\n    width: 100%;\n    height: 50px;\n}\ntextarea[data-v-5e7617f2] {\n    font-size: 20px;\n    width: 100%;\n    resize: none;\n    border-top-left-radius: 10px;\n    border-bottom-right-radius: 10px;\n    color: whitesmoke;\n}\ntextarea[data-v-5e7617f2]:focus {\n    outline-width: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-5e7617f2] {\n    height: 80%;\n}\n@media all and (max-width: 990px) {\n.container-fluid[data-v-5e7617f2] {\n        top: -100px;\n        height: 30%;\n}\n}\n.chat[data-v-5e7617f2] {\n    height: 80%;\n    margin-bottom: 15px;\n}\n.input[data-v-5e7617f2] {\n    height: 20%;\n}\n.send[data-v-5e7617f2] {\n    width: 100%;\n    height: 50px;\n}\ntextarea[data-v-5e7617f2] {\n    font-size: 20px;\n    width: 100%;\n    resize: none;\n    border-top-left-radius: 10px;\n    border-bottom-right-radius: 10px;\n    color: whitesmoke;\n}\ntextarea[data-v-5e7617f2]:focus {\n    outline-width: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6811,7 +6815,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n@media screen and (max-width: 1450px) {\n.panel[data-v-15e51b50] {\n        position: fixed;\n        z-index: 20;\n        min-width: 250px;\n}\n}\n.card[data-v-15e51b50] {\n    height: 81%;\n}\n.btn[data-v-15e51b50] {\n    width: 90%;\n}\n.card[data-v-15e51b50] {\n    height: 80%;\n}\n.title[data-v-15e51b50] {\n    color: whitesmoke;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n@media screen and (max-width: 1450px) {\n.card[data-v-15e51b50] {\n        position: fixed;\n        z-index: 20;\n        min-width: 250px;\n}\n}\n.card[data-v-15e51b50] {\n    height: 81%;\n}\n.btn[data-v-15e51b50] {\n    width: 90%;\n}\n.card[data-v-15e51b50] {\n    height: 80%;\n}\n.title[data-v-15e51b50] {\n    color: whitesmoke;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39271,7 +39275,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "panel col-lg-2 card bg-second" }, [
+  return _c("div", { staticClass: "col-lg-2 card bg-second" }, [
     _c("div", { staticClass: "card-body" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -39425,7 +39429,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "user-listing mb-1 row" }, [
-    _c("div", { staticClass: "col-sm-9" }, [
+    _c("div", { staticClass: "col-sm-8" }, [
       _c("span", { staticClass: "label" }, [_vm._v(_vm._s(_vm.username))])
     ]),
     _vm._v(" "),
@@ -39437,7 +39441,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-3" }, [
+    return _c("div", { staticClass: "col-sm-4" }, [
       _c("img", { staticClass: "icon", attrs: { src: "images/account.svg" } }),
       _vm._v(" "),
       _c("img", { staticClass: "icon", attrs: { src: "images/close.svg" } })
