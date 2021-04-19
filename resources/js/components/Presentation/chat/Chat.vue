@@ -1,9 +1,10 @@
 <template>
     <div class="container-fluid col-lg-3">
         <div class="card chat bg-gray chat-collapse" id="chat-collapse">
-            <div class="card-body">
-                <div class="list">
-                </div>
+            <div class="list mt-2">
+                <presentation-chat-listing-received></presentation-chat-listing-received>
+                <presentation-chat-listing-sent></presentation-chat-listing-sent>
+
             </div>
         </div>
         <div class="chat-collapse" id="chat-collapse">

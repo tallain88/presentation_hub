@@ -1,11 +1,10 @@
 <template>
-    <div class="user-listing mb-1 row">
-        <div class="col-sm-7">
-            <span class="label">{{ username }}</span>
+    <div class="row ml-2 mr-2 mb-2">
+        <div class="col-3">
+            <presentation-chat-head></presentation-chat-head>
         </div>
-        <div class="col-sm-3">
-            <img class="icon" src="images/account.svg"/>
-            <img class="icon" src="images/close.svg"/>
+        <div class="col-9 chat-bubble-received">
+            Hey! How are you?
         </div>
     </div>
 </template>
@@ -27,6 +26,9 @@
             username: {
                 type: String,
             },
+            message: {
+                type: String
+            }
         },
         
         mounted() {
