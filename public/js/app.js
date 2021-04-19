@@ -2309,7 +2309,9 @@ var emoji = __webpack_require__(/*! emoji-dictionary */ "./node_modules/emoji-di
   },
   methods: {
     emojiSearchHandler: function emojiSearchHandler(event) {
-      var search = event.target.value.toLowerCase().replace(" ", "_");
+      var a = '';
+      var search = event.target.value.toLowerCase().replaceAll(" ", "_");
+      console.log(search);
       this.searchResults = emoji.names.reduce(function (results, keyword) {
         if (keyword.includes(search)) {
           results.push(emoji.getUnicode(keyword));
@@ -41553,7 +41555,7 @@ var staticRenderFns = [
       },
       [
         _c("button", { staticClass: "presentation-btn btn btn-secondary" }, [
-          _vm._v("\n                Share a presentation\n        ")
+          _vm._v("\n                Share a Presentation\n        ")
         ])
       ]
     )
@@ -41569,7 +41571,7 @@ var staticRenderFns = [
           staticClass: "presentation-btn btn btn-secondary",
           attrs: { "data-toggle": "modal", "data-target": "#joinModal" }
         },
-        [_vm._v("\n                Join a presentation\n        ")]
+        [_vm._v("\n                Join a Presentation\n        ")]
       )
     ])
   }
@@ -41631,7 +41633,7 @@ var staticRenderFns = [
                     staticClass: "modal-title text-white",
                     attrs: { id: "exampleModalLabel" }
                   },
-                  [_vm._v("Join a presentation")]
+                  [_vm._v("Join a Presentation")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -41661,7 +41663,7 @@ var staticRenderFns = [
                         staticClass: "col-sm-4 col-form-label text-white",
                         attrs: { for: "title" }
                       },
-                      [_vm._v("Presentation ID")]
+                      [_vm._v("Presentation Id")]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-sm-8" }, [
@@ -41670,7 +41672,8 @@ var staticRenderFns = [
                           id: "title",
                           name: "title",
                           type: "text",
-                          placeholder: "Presentation Name"
+                          placeholder: "Presentation Name",
+                          required: ""
                         }
                       })
                     ])
@@ -41692,7 +41695,7 @@ var staticRenderFns = [
                           id: "viewer-limit",
                           name: "viewer-limit",
                           type: "password",
-                          placeholder: "password"
+                          placeholder: "Password"
                         }
                       })
                     ])
@@ -41716,7 +41719,7 @@ var staticRenderFns = [
                     staticClass: "btn btn-secondary",
                     attrs: { type: "button" }
                   },
-                  [_vm._v("Save changes")]
+                  [_vm._v("Join Presentation")]
                 )
               ])
             ])
@@ -41783,7 +41786,7 @@ var staticRenderFns = [
                     staticClass: "modal-title text-white",
                     attrs: { id: "exampleModalLabel" }
                   },
-                  [_vm._v("Share a presentation")]
+                  [_vm._v("Share a Presentation")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -41805,7 +41808,7 @@ var staticRenderFns = [
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body bg-main" }, [
-                _c("form", [
+                _c("form", { attrs: { method: "POST", action: "/" } }, [
                   _c("div", { staticClass: "form-group row" }, [
                     _c(
                       "label",
@@ -41822,7 +41825,8 @@ var staticRenderFns = [
                           id: "title",
                           name: "title",
                           type: "text",
-                          placeholder: "Presentation Name"
+                          placeholder: "Presentation Name",
+                          required: ""
                         }
                       })
                     ])
@@ -41845,7 +41849,8 @@ var staticRenderFns = [
                           name: "viewer-limit",
                           type: "number",
                           placeholder: "5",
-                          value: "5"
+                          value: "5",
+                          required: ""
                         }
                       })
                     ])
@@ -41867,7 +41872,7 @@ var staticRenderFns = [
                           id: "password",
                           name: "password",
                           type: "password",
-                          placeholder: "password"
+                          placeholder: "Password"
                         }
                       })
                     ])
@@ -41889,9 +41894,9 @@ var staticRenderFns = [
                   "button",
                   {
                     staticClass: "btn btn-secondary",
-                    attrs: { type: "button" }
+                    attrs: { type: "submit" }
                   },
-                  [_vm._v("Save changes")]
+                  [_vm._v("Start Presentation")]
                 )
               ])
             ])

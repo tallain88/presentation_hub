@@ -69,7 +69,9 @@
         },
         methods: {
             emojiSearchHandler: function (event) {
-                const search = event.target.value.toLowerCase().replace(" ", "_");
+                let a = '';
+                const search = event.target.value.toLowerCase().replaceAll(" ", "_");
+                console.log(search);
                 this.searchResults = emoji.names.reduce((results, keyword) => { if (keyword.includes(search)) { results.push(emoji.getUnicode(keyword)); } return results; }, []);
                 console.log(this.searchResults);
             },

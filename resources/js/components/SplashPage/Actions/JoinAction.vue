@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header bg-main">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Join a presentation</h5>
+                <h5 class="modal-title text-white" id="exampleModalLabel">Join a Presentation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,22 +11,22 @@
             <div class="modal-body bg-main">
                 <form>
                     <div class="form-group row">
-                        <label for="title" class="col-sm-4 col-form-label text-white">Presentation ID</label>
+                        <label for="title" class="col-sm-4 col-form-label text-white">Presentation Id</label>
                         <div class="col-sm-8">
-                            <input id="title" name="title" type="text" placeholder="Presentation Name">
+                            <input id="title" name="title" type="text" placeholder="Presentation Name" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="viewer-limit" class="col-sm-4 col-form-label text-white">Password</label>
                         <div class="col-sm-8">
-                        <input id="viewer-limit" name="viewer-limit" type="password" placeholder="password">
+                        <input id="viewer-limit" name="viewer-limit" type="password" placeholder="Password">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer bg-main">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary">Save changes</button>
+                <button type="button" class="btn btn-secondary">Join Presentation</button>
             </div>
             </div>
         </div>

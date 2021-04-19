@@ -8,12 +8,12 @@
         </div>
         <div class="row mb-2 justify-content-center" data-toggle="modal" data-target="#shareModal">
             <button class="presentation-btn btn btn-secondary">
-                    Share a presentation
+                    Share a Presentation
             </button>
         </div>
         <div class="row justify-content-center">
             <button class="presentation-btn btn btn-secondary" data-toggle="modal" data-target="#joinModal">
-                    Join a presentation
+                    Join a Presentation
             </button>
         </div>
         <img id="splashpage-image" alt="woman giving a presentation" height="300px" src="images/splashpage_image_1.svg"/>
