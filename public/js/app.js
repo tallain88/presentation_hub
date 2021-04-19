@@ -7403,7 +7403,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n@media screen and (max-width: 1450px) {\n.card[data-v-9faa78aa] {\n        position: fixed;\n        z-index: 20;\n}\n}\n.card-body[data-v-9faa78aa] {\n    border-radius: 10px;\n}\n.card[data-v-9faa78aa] {\n    height: 81%;\n    overflow-y: scroll;\n}\n.emoji[data-v-9faa78aa] {\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    font-size: 20px;\n}\n.btn[data-v-9faa78aa] {\n    width: 90%;\n}\n.card[data-v-9faa78aa] {\n    height: 80%;\n}\n.title[data-v-9faa78aa] {\n    color: whitesmoke;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n@media screen and (max-width: 1450px) {\n.card[data-v-9faa78aa] {\n        position: fixed;\n        z-index: 20;\n}\n}\n.card-body[data-v-9faa78aa] {\n    border-radius: 10px;\n}\n.card[data-v-9faa78aa] {\n    height: 81%;\n    overflow-y: scroll;\n}\n.emoji[data-v-9faa78aa] {\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    font-size: 20px;\n    cursor: pointer;\n}\n.btn[data-v-9faa78aa] {\n    width: 90%;\n}\n.card[data-v-9faa78aa] {\n    height: 80%;\n}\n.title[data-v-9faa78aa] {\n    color: whitesmoke;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41102,7 +41102,7 @@ var staticRenderFns = [
               "data-toggle": "collapse",
               href: "#chat-collapse",
               "data-target": "#chat-collapse",
-              "aria-expanded": "false",
+              "aria-expanded": "true",
               "aria-controls": "chat-collapse"
             }
           },
@@ -41337,7 +41337,7 @@ var render = function() {
                 "div",
                 {
                   key: index,
-                  staticClass: "col-3 emoji",
+                  staticClass: "col-2 emoji m-2",
                   attrs: { title: _vm.emojiTitle(emoji) }
                 },
                 [_vm._v(_vm._s(emoji))]
@@ -41367,7 +41367,7 @@ var staticRenderFns = [
             "data-toggle": "collapse",
             href: "#chat-collapse",
             "data-target": "#chat-collapse",
-            "aria-expanded": "false",
+            "aria-expanded": "true",
             "aria-controls": "chat-collapse"
           }
         },

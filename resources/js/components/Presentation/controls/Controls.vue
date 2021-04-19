@@ -9,7 +9,7 @@
                     <button class="btn btn-third">Select Presentation Source</button>
                 </div>
                 <div class="row mb-4">
-                    <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="false" aria-controls="chat-collapse">Hide Chat</button>
+                    <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="true" aria-controls="chat-collapse">Hide Chat</button>
                 </div>
            </div>
            <div class="row">

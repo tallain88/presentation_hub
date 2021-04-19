@@ -1,12 +1,12 @@
 <template>
    <div class="col-lg-2 ml-2 card bg-second">
        <div class="row mt-2 justify-content-center">
-            <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="false" aria-controls="chat-collapse">Hide Chat</button>
+            <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="true" aria-controls="chat-collapse">Hide Chat</button>
         </div>
         <input class="search mt-2" placeholder="Search emojis" type="text" name="emoji-search" v-model="emojiSearch" v-on:input="emojiSearchHandler"/>
         <div class="card-body mt-2">
                <div v-for="(chunk, index) in emojiChunks" v-bind:key="index" class="row bg-gray">
-                   <div v-for="(emoji, index) in chunk" v-bind:key="index" class="col-3 emoji" v-bind:title="emojiTitle(emoji)">{{emoji}}</div>
+                   <div v-for="(emoji, index) in chunk" v-bind:key="index" class="col-2 emoji m-2" v-bind:title="emojiTitle(emoji)">{{emoji}}</div>
                </div>
                <div class="mt-2"></div>
         </div>
@@ -30,6 +30,7 @@
     .emoji {
         user-select: none;
         font-size: 20px;
+        cursor: pointer;
     }
     .btn {
         width: 90%;
