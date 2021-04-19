@@ -6,11 +6,11 @@
         <button class="btn btn-secondary collapse-controls" data-toggle="collapse" href="#controls-collapse" data-target="#controls-collapse" aria-expanded="false" aria-controls="controls-collpase">Controls</button>
     </div>
     <div class="row fill">
-        {{-- @if ($host_id === auth()->id()) --}}
-            {{-- <presentation-controls class="controls-collapse" id="controls-collapse"></presentation-controls> --}}
-        {{-- @else --}}
+        @if ($host_id === auth()->id())
+            <presentation-controls class="controls-collapse" id="controls-collapse"></presentation-controls>
+        @else
             <presentation-reactions class="controls-collapse" id="controls-collapse"></presentation-reactions>
-        {{-- @endif --}}
+        @endif
             <presentation-video></presentation-video>
             <presentation-chat></presentation-chat>
     </div>

@@ -30,6 +30,7 @@ Vue.component('splash-controls-action-share', require('./components/SplashPage/A
 
 // Presentation
 Vue.component('presentation-controls', require('./components/Presentation/controls/Controls.vue').default);
+Vue.component('presentation-controls-kick-viewer', require('./components/Presentation/controls/KickViewer.vue').default);
 Vue.component('presentation-effects', require('./components/Presentation/controls/Effects.vue').default);
 Vue.component('presentation-user-list', require('./components/Presentation/controls/UserList.vue').default);
 Vue.component('presentation-user-listing', require('./components/Presentation/controls/UserListing.vue').default);

@@ -5,8 +5,9 @@
         </div>
         <div class="col-sm-4">
             <img class="icon" src="images/account.svg"/>
-            <img class="icon" src="images/close.svg"/>
+            <img class="icon" src="images/close.svg" data-toggle="modal" data-target="#kick-user-modal"/>
         </div>
+        <presentation-controls-kick-viewer id="kick-user-modal" :username="username"></presentation-controls-kick-viewer>
     </div>
 </template>
 
@@ -30,7 +31,6 @@
         },
         
         mounted() {
-            console.log('Component mounted.')
         }
     }
 </script>
