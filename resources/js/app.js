@@ -22,7 +22,11 @@ window.Vue = require('vue').default;
 
 // Splash Page Components
 Vue.component('splash-demo', require('./components/SplashPage/Demo.vue').default);
-Vue.component('splash-controls', require('./components/SplashPage/Actions.vue').default);
+Vue.component('splash-controls', require('./components/SplashPage/Actions/Actions.vue').default);
+Vue.component('splash-controls-action-join', require('./components/SplashPage/Actions/JoinAction.vue').default);
+Vue.component('splash-controls-action-share', require('./components/SplashPage/Actions/ShareAction.vue').default);
+
+
 
 // Presentation
 Vue.component('presentation-controls', require('./components/Presentation/controls/Controls.vue').default);

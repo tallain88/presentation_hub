@@ -31,9 +31,6 @@
         user-select: none;
         font-size: 20px;
     }
-    .emoji:hover {
-
-    }
     .btn {
         width: 90%;
     }

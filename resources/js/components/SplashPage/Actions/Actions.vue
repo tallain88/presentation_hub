@@ -6,17 +6,19 @@
         <div class="row mb-2 justify-content-center">
             <h3 class="text" id="catch-line">We help collaborators share their beautiful presentations across the internet with anyone.</h3>
         </div>
-        <div class="row mb-2 justify-content-center">
+        <div class="row mb-2 justify-content-center" data-toggle="modal" data-target="#shareModal">
             <button class="presentation-btn btn btn-secondary">
                     Share a presentation
             </button>
         </div>
         <div class="row justify-content-center">
-            <button class="presentation-btn btn btn-secondary">
+            <button class="presentation-btn btn btn-secondary" data-toggle="modal" data-target="#joinModal">
                     Join a presentation
             </button>
         </div>
-        <img id="splashpage-image" height="300px" src="images/splashpage_image_1.svg"/>
+        <img id="splashpage-image" alt="woman giving a presentation" height="300px" src="images/splashpage_image_1.svg"/>
+        <splash-controls-action-share id="shareModal"></splash-controls-action-share>
+        <splash-controls-action-join id="joinModal"></splash-controls-action-join>
     </div>
 </template>
 
@@ -58,6 +60,9 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+
         }
     }
 </script>
