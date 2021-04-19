@@ -41104,7 +41104,7 @@ var staticRenderFns = [
               "aria-controls": "chat-collapse"
             }
           },
-          [_vm._v("Toggle chat")]
+          [_vm._v("Hide Chat")]
         )
       ])
     ])
@@ -41369,7 +41369,7 @@ var staticRenderFns = [
             "aria-controls": "chat-collapse"
           }
         },
-        [_vm._v("Toggle chat")]
+        [_vm._v("Hide Chat")]
       )
     ])
   }

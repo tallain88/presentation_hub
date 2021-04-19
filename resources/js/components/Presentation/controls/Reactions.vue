@@ -1,7 +1,7 @@
 <template>
    <div class="col-lg-2 ml-2 card bg-second">
        <div class="row mt-2 justify-content-center">
-            <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="false" aria-controls="chat-collapse">Toggle chat</button>
+            <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="false" aria-controls="chat-collapse">Hide Chat</button>
         </div>
         <input class="search mt-2" placeholder="Search emojis" type="text" name="emoji-search" v-model="emojiSearch" v-on:input="emojiSearchHandler"/>
         <div class="card-body mt-2">
