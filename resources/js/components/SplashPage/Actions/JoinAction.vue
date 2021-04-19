@@ -13,7 +13,7 @@
                     <div class="form-group row">
                         <label for="title" class="col-sm-4 col-form-label text-white">Presentation Id</label>
                         <div class="col-sm-8">
-                            <input id="title" name="title" type="text" placeholder="Presentation Name" required>
+                            <input id="title" name="title" type="text" placeholder="Presentation Id" required>
                         </div>
                     </div>
                     <div class="form-group row">

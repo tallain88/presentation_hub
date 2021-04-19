@@ -9,18 +9,18 @@
                     </button>
                 </div>
                 <div class="modal-body bg-main">
-                    <form method="POST" action="/">
+                    <form method="POST" action="/presentation">
                         <div class="form-group row">
                             <label for="title" class="col-sm-4 col-form-label text-white">Presentation Name</label>
                             <div class="col-sm-8">
-                                <input id="title" name="title" type="text" placeholder="Presentation Name" required>
+                                <input id="title" name="title" placeholder="Presentation Name" value="" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="viewer-limit" class="col-sm-4 col-form-label text-white">Viewer Limit</label>
                             <div class="col-sm-8">
-                                <input id="viewer-limit" name="viewer-limit" type="number" placeholder="5" value="5" required>
+                                <input id="viewer-limit" name="viewer-limit" type="number" placeholder=5 value=5 required>
                             </div>
                         </div>
 

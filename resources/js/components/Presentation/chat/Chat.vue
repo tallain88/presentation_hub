@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid col-lg-3 chat-collapse" id="chat-collapse">
+    <div class="container-fluid col-lg-3 chat-collapse accordion-body" id="chat-collapse">
         <div class="card chat bg-gray">
             <div class="list mt-2">
                 <presentation-chat-listing-received></presentation-chat-listing-received>

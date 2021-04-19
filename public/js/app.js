@@ -2281,6 +2281,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var emoji = __webpack_require__(/*! emoji-dictionary */ "./node_modules/emoji-dictionary/lib/index.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -40903,7 +40904,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "container-fluid col-lg-3 chat-collapse",
+      staticClass: "container-fluid col-lg-3 chat-collapse accordion-body",
       attrs: { id: "chat-collapse" }
     },
     [
@@ -41547,18 +41548,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "row mb-2 justify-content-center",
-        attrs: { "data-toggle": "modal", "data-target": "#shareModal" }
-      },
-      [
-        _c("button", { staticClass: "presentation-btn btn btn-secondary" }, [
-          _vm._v("\n                Share a Presentation\n        ")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "row mb-2 justify-content-center" }, [
+      _c(
+        "button",
+        {
+          staticClass: "presentation-btn btn btn-secondary",
+          attrs: { "data-toggle": "modal", "data-target": "#shareModal" }
+        },
+        [_vm._v("\n                Share a Presentation\n        ")]
+      )
+    ])
   },
   function() {
     var _vm = this
@@ -41672,7 +41671,7 @@ var staticRenderFns = [
                           id: "title",
                           name: "title",
                           type: "text",
-                          placeholder: "Presentation Name",
+                          placeholder: "Presentation Id",
                           required: ""
                         }
                       })
@@ -41808,76 +41807,80 @@ var staticRenderFns = [
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body bg-main" }, [
-                _c("form", { attrs: { method: "POST", action: "/" } }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "title" }
-                      },
-                      [_vm._v("Presentation Name")]
-                    ),
+                _c(
+                  "form",
+                  { attrs: { method: "POST", action: "/presentation" } },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-white",
+                          attrs: { for: "title" }
+                        },
+                        [_vm._v("Presentation Name")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          attrs: {
+                            id: "title",
+                            name: "title",
+                            placeholder: "Presentation Name",
+                            value: "",
+                            required: ""
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-8" }, [
-                      _c("input", {
-                        attrs: {
-                          id: "title",
-                          name: "title",
-                          type: "text",
-                          placeholder: "Presentation Name",
-                          required: ""
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "viewer-limit" }
-                      },
-                      [_vm._v("Viewer Limit")]
-                    ),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-white",
+                          attrs: { for: "viewer-limit" }
+                        },
+                        [_vm._v("Viewer Limit")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          attrs: {
+                            id: "viewer-limit",
+                            name: "viewer-limit",
+                            type: "number",
+                            placeholder: "5",
+                            value: "5",
+                            required: ""
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-8" }, [
-                      _c("input", {
-                        attrs: {
-                          id: "viewer-limit",
-                          name: "viewer-limit",
-                          type: "number",
-                          placeholder: "5",
-                          value: "5",
-                          required: ""
-                        }
-                      })
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-white",
+                          attrs: { for: "password" }
+                        },
+                        [_vm._v("Password (optional)")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          attrs: {
+                            id: "password",
+                            name: "password",
+                            type: "password",
+                            placeholder: "Password"
+                          }
+                        })
+                      ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "password" }
-                      },
-                      [_vm._v("Password (optional)")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-8" }, [
-                      _c("input", {
-                        attrs: {
-                          id: "password",
-                          name: "password",
-                          type: "password",
-                          placeholder: "Password"
-                        }
-                      })
-                    ])
-                  ])
-                ])
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer bg-main" }, [

@@ -6,8 +6,8 @@
         <div class="row mb-2 justify-content-center">
             <h3 class="text" id="catch-line">We help collaborators share their beautiful presentations across the internet with anyone.</h3>
         </div>
-        <div class="row mb-2 justify-content-center" data-toggle="modal" data-target="#shareModal">
-            <button class="presentation-btn btn btn-secondary">
+        <div class="row mb-2 justify-content-center">
+            <button class="presentation-btn btn btn-secondary" data-toggle="modal" data-target="#shareModal">
                     Share a Presentation
             </button>
         </div>
