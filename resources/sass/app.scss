@@ -12,6 +12,14 @@
     background-color: $primary-color !important;
 }
 
+.bg-second {
+    background-color: $secondary-color !important;
+}
+
+.bg-gray {
+    background-color: #f0f0f0 !important;
+}
+
 .navbar-primary {
     background-color: $primary-color;
 }
@@ -56,6 +64,14 @@ a:hover {
     background-color: #BF00AC !important;
 }
 
+.btn-third, .btn-third:active, .btn-third:visited {
+    background-color: white !important;
+}
+
+.btn-third:hover {
+    background-color: gray !important;
+}
+
 .py-4 {
     height: 100%;
 }
@@ -89,5 +105,76 @@ a:hover {
     height: 60px;
     position: fixed;
     bottom: 0;
-    z-index: 0;
+    z-index: -1;
+}
+
+.label {
+    color: whitesmoke;
+}
+
+hr {
+    background-color: whitesmoke;
+}
+
+.list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+.controls-collapse {
+    overflow-y: scroll;
+    @media screen and (max-width: 1450px) {
+        &:not(.show) {
+          display: none;
+        }
+    }
+}
+  
+.controls-collapsing {
+    height: 0;
+    overflow: hidden;
+    @include transition($controls-transition-collapse);
+}
+
+
+.collapse-controls {
+    @media screen and (min-width: 1450px) {
+        display: none;
+    }
+}
+
+.chat-collapse {
+    @media screen and (max-width: 1450px) {
+        &:not(.show) {
+          display: none;
+        }
+    }
+}
+  
+.chat-collapsing {
+    height: 0;
+    overflow: hidden;
+    @include transition($controls-transition-collapse);
+}
+
+.chat-bubble-received {
+    background-color: #c4c6d0;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 5px;
+    color: black;
+    font-size: 20px;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.chat-bubble-sent {
+    background-color: $primary-color;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 5px;
+    color: whitesmoke;
+    font-size: 20px;
+    min-height: 100px;
 }

@@ -78,7 +78,8 @@
         <main class="py-4">
             @yield('content')
         </main>
-        <div class="container-fluid footer"></div>
+
     </div>
+    <div class="container-fluid footer"></div>
 </body>
 </html>

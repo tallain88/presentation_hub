@@ -21954,6 +21954,14 @@ a.text-dark:focus {
   background-color: #5F2EEA !important;
 }
 
+.bg-second {
+  background-color: #2A00A2 !important;
+}
+
+.bg-gray {
+  background-color: #f0f0f0 !important;
+}
+
 .navbar-primary {
   background-color: #5F2EEA;
 }
@@ -22000,6 +22008,16 @@ a:hover {
   background-color: #BF00AC !important;
 }
 
+.btn-third,
+.btn-third:active,
+.btn-third:visited {
+  background-color: white !important;
+}
+
+.btn-third:hover {
+  background-color: gray !important;
+}
+
 .py-4 {
   height: 100%;
 }
@@ -22033,7 +22051,87 @@ a:hover {
   height: 60px;
   position: fixed;
   bottom: 0;
-  z-index: 0;
+  z-index: -1;
+}
+
+.label {
+  color: whitesmoke;
+}
+
+hr {
+  background-color: whitesmoke;
+}
+
+.list {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.controls-collapse {
+  overflow-y: scroll;
+}
+
+@media screen and (max-width: 1450px) {
+  .controls-collapse:not(.show) {
+    display: none;
+  }
+}
+
+.controls-collapsing {
+  height: 0;
+  overflow: hidden;
+  transition: height 1s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controls-collapsing {
+    transition: none;
+  }
+}
+
+@media screen and (min-width: 1450px) {
+  .collapse-controls {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .chat-collapse:not(.show) {
+    display: none;
+  }
+}
+
+.chat-collapsing {
+  height: 0;
+  overflow: hidden;
+  transition: height 1s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-collapsing {
+    transition: none;
+  }
+}
+
+.chat-bubble-received {
+  background-color: #c4c6d0;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 5px;
+  color: black;
+  font-size: 20px;
+  min-height: 100px;
+  overflow: hidden;
+}
+
+.chat-bubble-sent {
+  background-color: #5F2EEA;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  padding: 5px;
+  color: whitesmoke;
+  font-size: 20px;
+  min-height: 100px;
 }
 
 
