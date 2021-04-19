@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Presentation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class PresentationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['index', 'store', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,29 +45,28 @@ class PresentationController extends Controller
         //validate request
         $validated = $request->validate([
             'user_id' => 'required',
-            'has_password' => 'required|boolean'
+            'has_password' => 'required|boolean',
             'title' => 'required',
         ]);
-
+        // echo $validated;
         //get user (throws exception on fail)
-        $user = User::findOrFail($validated->id);
-
-
-
+        $user = User::findOrFail($request->user_id);
 
         //save new presentation object
         $presentation = new Presentation;
         $presentation->title = $request->title;
+        $presentation->user_id = $request->user_id;
         //make unique link
         $presentation->link = (string) Str::uuid(); 
 
         //check if password is set then hash it
-        if ($validated->has_password)
+        if ($request->has_password)
         {
             $presentation->password = Hash::make($request->password);
         }
-        $presentation->associate($user);
         $presentation->save();
+
+        $user->presentations()->save($presentation);
     }
 
     /**

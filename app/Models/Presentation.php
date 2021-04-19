@@ -30,6 +30,6 @@ class Presentation extends Model
 
     public function presentations()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

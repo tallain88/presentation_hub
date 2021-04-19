@@ -49,6 +49,6 @@ class User extends Authenticatable
 
     public function presentations()
     {
-        $this->hasMany(Presentation::class);
+        return $this->hasMany(Presentation::class);
     }
 }

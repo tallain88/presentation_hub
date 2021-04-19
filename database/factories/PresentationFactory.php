@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Presentation;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 class PresentationFactory extends Factory
 {
@@ -22,7 +23,12 @@ class PresentationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->sentence(10),
+            'user_id' => User::all()->random()->id,
+            'link' => $this->faker->unique()->regexify('[A-Za-z0-9]{20}'),
+            'has_password' => false,
+            'password' => null,
+
         ];
     }
 }
