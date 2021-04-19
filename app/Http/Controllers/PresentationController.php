@@ -38,19 +38,28 @@ class PresentationController extends Controller
     {
         //validate request
         $validated = $request->validate([
-            'id' => 'required',
+            'user_id' => 'required',
+            'has_password' => 'required|boolean'
             'title' => 'required',
         ]);
 
-        //get user
+        //get user (throws exception on fail)
         $user = User::findOrFail($validated->id);
 
-        //make unique link
+
+
 
         //save new presentation object
         $presentation = new Presentation;
         $presentation->title = $request->title;
-        $presentation->link = (string) Str::uuid();
+        //make unique link
+        $presentation->link = (string) Str::uuid(); 
+
+        //check if password is set then hash it
+        if ($validated->has_password)
+        {
+            $presentation->password = Hash::make($request->password);
+        }
         $presentation->associate($user);
         $presentation->save();
     }

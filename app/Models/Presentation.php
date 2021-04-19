@@ -15,8 +15,11 @@ class Presentation extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'title',
         'link',
+        'has_password',
+        'password',
     ];
 
     /*
