@@ -22080,7 +22080,7 @@ hr {
 .controls-collapsing {
   height: 0;
   overflow: hidden;
-  transition: height 0s ease;
+  transition: height 1s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -22104,7 +22104,7 @@ hr {
 .chat-collapsing {
   height: 0;
   overflow: hidden;
-  transition: height 0s ease;
+  transition: height 1s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

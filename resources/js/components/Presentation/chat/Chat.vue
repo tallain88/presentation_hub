@@ -1,13 +1,13 @@
 <template>
-    <div class="container-fluid col-lg-3">
-        <div class="card chat bg-gray chat-collapse" id="chat-collapse">
+    <div class="container-fluid col-lg-3 chat-collapse" id="chat-collapse">
+        <div class="card chat bg-gray">
             <div class="list mt-2">
                 <presentation-chat-listing-received></presentation-chat-listing-received>
                 <presentation-chat-listing-sent></presentation-chat-listing-sent>
 
             </div>
         </div>
-        <div class="chat-collapse" id="chat-collapse">
+        <div >
         <textarea placeholder="Type here to chat..." class="input bg-main"/>
         <button class="btn send btn-secondary">Send</button>
         </div>

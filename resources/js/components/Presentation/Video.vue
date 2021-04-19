@@ -1,5 +1,5 @@
 <template>
-    <div class="col-lg-7 container">
+    <div class="col-lg-6 container">
         <video id="video" class="container-fluid" controls>
             <source src="movie.mp4" type="video/mp4">
         </video>
