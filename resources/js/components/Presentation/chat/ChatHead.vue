@@ -1,7 +1,7 @@
 <template>
 <div>
     <img class="rounded-circle mt-1 mb-1" height="80px" src="images/sender_image_placeholder.svg">
-    <p class="name">Raven</p>
+    <p class="name">{{username}}</p>
 </div>
 </template>
 
@@ -13,5 +13,6 @@
 
 <script>
     export default {
+        props: ['username']
     }
 </script>

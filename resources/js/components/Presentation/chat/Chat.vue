@@ -9,13 +9,13 @@
                     v-if="historyMsg.userId !== userid"
                     v-bind:userid="historyMsg.userId"
                     v-bind:text="historyMsg.text"
-                    v-bind:username="historyMsg.userName"
+                    v-bind:username="historyMsg.username"
                 ></presentation-chat-listing-received>
                  <presentation-chat-listing-sent
                     v-if="historyMsg.userId === userid"
                     v-bind:userid="historyMsg.userId"
                     v-bind:text="historyMsg.text"
-                    v-bind:username="historyMsg.userName"
+                    v-bind:username="historyMsg.username"
                 ></presentation-chat-listing-sent>
             </div>
             <div v-for="msg in vueChatMsg" v-bind:key="msg.id">
@@ -23,7 +23,7 @@
                     v-if="msg.message.userId === userid"
                     v-bind:userid="msg.message.userId"
                     v-bind:text="msg.message.text"
-                    v-bind:username="msg.message.userName"
+                    v-bind:username="msg.message.username"
                 ></presentation-chat-listing-sent>
             </div>
         </div>
@@ -108,8 +108,8 @@ export default {
         this.$pnSubscribe({
             channels: [this.presentationid]
         });
-        this.$nextTick(fetchHistory(this.$store, this.presentationid));
-        this.scrollBottom();
+        this.$nextTick(function() { fetchHistory(this.$store, this.presentationid); this.scrollBottom()});
+        
     },
     props: ['presentationid', 'username', 'userid'],
     computed: {
@@ -140,7 +140,7 @@ export default {
                 message: {
                     text: this.text,
                     userId: this.$props.userid,
-                    userName: this.$props.userName
+                    username: this.$props.username
                 }
             });
             // Reset the text input
@@ -152,12 +152,15 @@ export default {
             if (this.text.length === 0) {
                 return;
             }
+
+            console.log(this.$props.username);
+
             this.$pnPublish({
                 channel: this.$props.presentationid,
                 message: {
                     text: this.text,
                     userId: this.$props.userid,
-                    userName: this.$props.userName
+                    username: this.$props.username
                 }
             });
             // Reset the text input

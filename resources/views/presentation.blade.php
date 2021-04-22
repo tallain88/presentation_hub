@@ -12,7 +12,7 @@
             <presentation-reactions class="controls-collapse" id="controls-collapse" presentationid={{'presentationId'}}></presentation-reactions>
         {{-- @endif --}}
             <presentation-video presentationid={{'presentationId'}}></presentation-video>
-            <presentation-chat username={{Auth::user()->name}} userid={{Auth::user()->id}} presentationid={{"test"}}></presentation-chat>
+            <presentation-chat username="{{Auth::user()->name}}" userid={{Auth::user()->id}} presentationid={{"test"}}></presentation-chat>
     </div>
 </div>
 @endsection

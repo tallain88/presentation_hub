@@ -1994,8 +1994,10 @@ function fetchHistory(store, presentationId) {
     this.$pnSubscribe({
       channels: [this.presentationid]
     });
-    this.$nextTick(fetchHistory(this.$store, this.presentationid));
-    this.scrollBottom();
+    this.$nextTick(function () {
+      fetchHistory(this.$store, this.presentationid);
+      this.scrollBottom();
+    });
   },
   props: ['presentationid', 'username', 'userid'],
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
@@ -2025,7 +2027,7 @@ function fetchHistory(store, presentationId) {
         message: {
           text: this.text,
           userId: this.$props.userid,
-          userName: this.$props.userName
+          username: this.$props.username
         }
       }); // Reset the text input
 
@@ -2039,12 +2041,13 @@ function fetchHistory(store, presentationId) {
         return;
       }
 
+      console.log(this.$props.username);
       this.$pnPublish({
         channel: this.$props.presentationid,
         message: {
           text: this.text,
           userId: this.$props.userid,
-          userName: this.$props.userName
+          username: this.$props.username
         }
       }); // Reset the text input
 
@@ -2083,7 +2086,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['username']
+});
 
 /***/ }),
 
@@ -2121,17 +2126,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    userid: {
-      type: String
-    },
-    text: {
-      type: String
-    },
-    username: {
-      type: String
-    }
-  },
+  props: ['text', 'username'],
   computed: {
     me: function me() {
       var result = false; // Check if the client uuid of the message received is your client uuid
@@ -41916,7 +41911,7 @@ var render = function() {
                       attrs: {
                         userid: historyMsg.userId,
                         text: historyMsg.text,
-                        username: historyMsg.userName
+                        username: historyMsg.username
                       }
                     })
                   : _vm._e(),
@@ -41926,7 +41921,7 @@ var render = function() {
                       attrs: {
                         userid: historyMsg.userId,
                         text: historyMsg.text,
-                        username: historyMsg.userName
+                        username: historyMsg.username
                       }
                     })
                   : _vm._e()
@@ -41945,7 +41940,7 @@ var render = function() {
                       attrs: {
                         userid: msg.message.userId,
                         text: msg.message.text,
-                        username: msg.message.userName
+                        username: msg.message.username
                       }
                     })
                   : _vm._e()
@@ -42024,23 +42019,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("img", {
+      staticClass: "rounded-circle mt-1 mb-1",
+      attrs: { height: "80px", src: "images/sender_image_placeholder.svg" }
+    }),
+    _vm._v(" "),
+    _c("p", { staticClass: "name" }, [_vm._v(_vm._s(_vm.username))])
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", {
-        staticClass: "rounded-circle mt-1 mb-1",
-        attrs: { height: "80px", src: "images/sender_image_placeholder.svg" }
-      }),
-      _vm._v(" "),
-      _c("p", { staticClass: "name" }, [_vm._v("Raven")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42064,7 +42052,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row ml-2 mr-2 mb-2" }, [
-    _c("div", { staticClass: "col-3" }, [_c("presentation-chat-head")], 1),
+    _c(
+      "div",
+      { staticClass: "col-3" },
+      [_c("presentation-chat-head", { attrs: { username: _vm.username } })],
+      1
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "col-9 chat-bubble-received" }, [
       _vm._v("\n        " + _vm._s(_vm.text) + "\n    ")
@@ -42102,7 +42095,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-3 justify-content-center" },
-      [_c("presentation-chat-head")],
+      [_c("presentation-chat-head", { attrs: { username: _vm.username } })],
       1
     )
   ])

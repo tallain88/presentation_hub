@@ -4,7 +4,7 @@
             {{ text }}
         </div>
         <div class="col-3 justify-content-center">
-            <presentation-chat-head></presentation-chat-head>
+            <presentation-chat-head :username="username"></presentation-chat-head>
         </div>
     </div>
 </template>

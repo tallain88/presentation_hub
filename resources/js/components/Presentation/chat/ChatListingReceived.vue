@@ -1,7 +1,7 @@
 <template>
     <div class="row ml-2 mr-2 mb-2">
         <div class="col-3">
-            <presentation-chat-head></presentation-chat-head>
+            <presentation-chat-head v-bind:username="username"></presentation-chat-head>
         </div>
         <div class="col-9 chat-bubble-received">
             {{ text }}
@@ -22,17 +22,7 @@
 
 <script>
 export default {
-    props: {
-        userid: {
-            type: String
-        },
-        text: {
-            type: String
-        },
-        username: {
-            type: String
-        }
-    },
+    props: ['text', 'username'],
     computed: {
         me() {
             let result = false;
