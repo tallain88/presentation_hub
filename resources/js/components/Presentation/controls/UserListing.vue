@@ -29,8 +29,5 @@
                 type: String,
             },
         },
-        
-        mounted() {
-        }
     }
 </script>

@@ -30,8 +30,5 @@
                 type: String,
             },
         },
-        mounted() {
-            console.log('Component mounted.')
-        },
     }
 </script>

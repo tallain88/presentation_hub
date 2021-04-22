@@ -7,12 +7,12 @@
     </div>
     <div class="row fill">
         {{-- @if ($host_id === auth()->id()) --}}
-            {{-- <presentation-controls class="controls-collapse" id="controls-collapse"></presentation-controls> --}}
+            {{-- <presentation-controls class="controls-collapse" id="controls-collapse" :presentationId={{presentationId}}></presentation-controls> --}}
         {{-- @else --}}
-            <presentation-reactions class="controls-collapse" id="controls-collapse"></presentation-reactions>
+            <presentation-reactions class="controls-collapse" id="controls-collapse" presentationid={{'presentationId'}}></presentation-reactions>
         {{-- @endif --}}
-            <presentation-video></presentation-video>
-            <presentation-chat></presentation-chat>
+            <presentation-video presentationid={{'presentationId'}}></presentation-video>
+            <presentation-chat username={{Auth::user()->name}} userid={{Auth::user()->id}} presentationid={{"test"}}></presentation-chat>
     </div>
 </div>
 @endsection
