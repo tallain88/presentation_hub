@@ -1,10 +1,10 @@
 <template>
     <div class="row ml-2 mr-2 mb-2">
         <div class="col-9 chat-bubble-sent">
-            Hey! I'm doing well, how about you? :)
+            {{ text }}
         </div>
         <div class="col-3 justify-content-center">
-            <presentation-chat-head></presentation-chat-head>
+            <presentation-chat-head :username="username"></presentation-chat-head>
         </div>
     </div>
 </template>
@@ -22,17 +22,16 @@
 
 <script>
     export default {
-        props: {
-            username: {
-                type: String,
-            },
-            message: {
-                type: String
-            }
+ props: {
+        uuid: {
+            type: String
         },
-        
-        mounted() {
-            console.log('Component mounted.')
+        text: {
+            type: String
+        },
+        username: {
+            type: String
         }
+    },
     }
 </script>

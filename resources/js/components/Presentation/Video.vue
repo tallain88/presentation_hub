@@ -26,6 +26,7 @@
 
     export default {
         props: {
+            presentatioId: null,
             isHost: false,
             userId: null,
             turnServerUrl: null,

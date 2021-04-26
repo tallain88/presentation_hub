@@ -9,20 +9,21 @@
         {{-- @if ($host_id === auth()->id()) --}}
         @php $isHost = True
         @endphp
-            <presentation-controls class="controls-collapse" id="controls-collapse"></presentation-controls>
+            {{-- <presentation-controls class="controls-collapse" id="controls-collapse" :presentationId={{presentationId}}></presentation-controls> --}}
         {{-- @else --}}
         @php $isHost = False
         @endphp
-            <presentation-reactions class="controls-collapse" id="controls-collapse"></presentation-reactions>
+            <presentation-reactions class="controls-collapse" id="controls-collapse" presentationid={{'presentationId'}}></presentation-reactions>
         {{-- @endif --}}
             <presentation-video 
+                presentationid={{'presentationId'}}
                 :is-host="'{{$isHost}}'"
                 :user-id="'{{Auth::user()->id}}'"
                 :presentation="{{$presentation}}"
                 turn-server-url="{{env('TURN_SERVER_URL')}}"
                 turn-server-username="{{env('TURN_SERVER_USERNAME')}}"
                 turn-server-credential="{{env('TURN_SERVER_CREDENTIAL')}}"></presentation-video>
-            <presentation-chat></presentation-chat>
+            <presentation-chat username="{{Auth::user()->name}}" userid={{Auth::user()->id}} presentationid={{"test"}}></presentation-chat>
     </div>
 </div>
 @endsection
