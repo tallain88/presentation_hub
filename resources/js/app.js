@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+// window.Vue = require('firebase/firestore').default;
 
 /**
  * The following block of code may be used to automatically register your
@@ -48,6 +49,7 @@ Vue.component('presentation-chat-reaction', require('./components/Presentation/c
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+export const eventBus = new Vue();
 
 const app = new Vue({
     el: '#app',

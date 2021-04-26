@@ -13,7 +13,7 @@
                         <div class="form-group row">
                             <label for="title" class="col-sm-4 col-form-label text-white">Presentation Name</label>
                             <div class="col-sm-8">
-                                <input id="title" name="title" placeholder="Presentation Name" value="" required>
+                                <input id="title" name="title" placeholder="Presentation Name" value="" required v-model=title>
                             </div>
                         </div>
 
@@ -27,14 +27,14 @@
                         <div class="form-group row">
                             <label for="password" class="col-sm-4 col-form-label text-white">Password (optional)</label>
                             <div class="col-sm-8">
-                                <input id="password" name="password" type="password" placeholder="Password">
+                                <input id="password" name="password" type="password" placeholder="Password" v-model=password>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer bg-main">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-secondary">Start Presentation</button>
+                    <button type="submit" class="btn btn-secondary" @click=handleStartPresentation>Start Presentation</button>
                 </div>
             </div>
         </div>
@@ -50,11 +50,33 @@
 
 <script>
     export default {
+        data() {
+            return {
+                password: null,
+                title: null,
+                
+            }
+        },
         mounted() {
             console.log('Component mounted.')
         },
         methods: {
-
+            handleStartPresentation() {
+                var self = this;
+                const body = {
+                    "title": this.title,
+                    'password': this.password,
+                };
+                console.log(body);
+                console.log(process.env.MIX_APP_URL);
+                axios.post(process.env.MIX_APP_URL + '/presentation', body)
+                .then((response) => {
+                    console.log(response.data);
+                    window.location.href='/presentation/' + response.data.link;
+                }, (error) => {
+                    console.log(error);
+                });
+            }
         }
     }
 </script>

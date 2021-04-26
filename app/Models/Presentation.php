@@ -18,7 +18,6 @@ class Presentation extends Model
         'user_id',
         'title',
         'link',
-        'has_password',
         'password',
     ];
 

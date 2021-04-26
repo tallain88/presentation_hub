@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Events\PresentationOffer;
+use App\Events\PresentationAnswer;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Presentation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class PresentationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only(['index', 'store', 'destroy']);
+        $this->middleware('auth')->only(['index', 'store', 'destroy', 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +25,7 @@ class PresentationController extends Controller
      */
     public function index()
     {
-        return view('presentation', ['host_id' => Auth::id()]);
+        return view('presentation', ['streamId' => $streamId, 'type' => 'broadcaster', 'host_id' => Auth::id()]);
     }
 
     /**
@@ -29,6 +33,12 @@ class PresentationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function consumer(Request $request, $streamId)
+    {
+        return view('presentation', ['type' => 'consumer', 'streamId' => $streamId]);
+    }
+
     public function create()
     {
         //
@@ -44,29 +54,30 @@ class PresentationController extends Controller
     {
         //validate request
         $validated = $request->validate([
-            'user_id' => 'required',
-            'has_password' => 'required|boolean',
             'title' => 'required',
         ]);
         // echo $validated;
         //get user (throws exception on fail)
-        $user = User::findOrFail($request->user_id);
+        $user = User::findOrFail(Auth::user()->id);
 
         //save new presentation object
         $presentation = new Presentation;
         $presentation->title = $request->title;
-        $presentation->user_id = $request->user_id;
+        $presentation->user_id = $user->id;
         //make unique link
         $presentation->link = (string) Str::uuid(); 
 
         //check if password is set then hash it
-        if ($request->has_password)
+        if ($request->password)
         {
             $presentation->password = Hash::make($request->password);
         }
-        $presentation->save();
 
         $user->presentations()->save($presentation);
+        // error_log($presentation);
+
+
+        return response()->json(['link' => $presentation->link], 200);
     }
 
     /**
@@ -116,4 +127,27 @@ class PresentationController extends Controller
         // delete presentation for user
         Presentation::find($presentation->id)->delete();
     }
+
+    /*
+        
+        WebRTC Methods
+
+    */
+    public function makePresentationOffer(Request $request)
+    {
+        $data['broadcaster'] = $request->broadcaster;
+        $data['receiver'] = $request->receiver;
+        $data['offer'] = $request->offer;
+
+        event(new PresentationOffer($data));
+    }
+
+    public function makePresentationAnswer(Request $request)
+    {
+        $data['broadcaster'] = $request->broadcaster;
+        $data['answer'] = $request->answer;
+
+        event(new PresentationAnswer($data));
+    }
+
 }
