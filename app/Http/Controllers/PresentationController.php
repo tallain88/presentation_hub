@@ -36,9 +36,7 @@ class PresentationController extends Controller
             return redirect()->back()->with('error', 'That presentation does not exist.');
         }
 
-
-        // Check if the presentation password is set.
-        if ($presentation->password && !Hash::check($request->password, $presentation->password)) {
+        if ($presentation->user_id !== Auth::id() && $presentation->password && !Hash::check($request->password, $presentation->password)) {
             return redirect()->back()->with('error', 'That password is incorrect');
         }
 
