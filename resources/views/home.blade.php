@@ -7,4 +7,5 @@
         <splash-demo></splash-demo>
     </div>
 </div>
+
 @endsection

@@ -27,7 +27,7 @@
                 ></presentation-chat-listing-sent>
             </div>
         </div>
-        <div>
+        <div v-if='userId'>
             <textarea
                 placeholder="Type here to chat..."
                 class="input bg-main"
@@ -36,6 +36,11 @@
             />
             <button class="btn send btn-secondary" v-on:click="submitMessage">
                 Send
+            </button>
+        </div>
+        <div v-if='!userId'>
+            <button class="btn send btn-secondary" v-on:click="loginRedirect">
+                Login to Chat.
             </button>
         </div>
     </div>
@@ -109,7 +114,6 @@ export default {
             channels: [this.presentationid]
         });
         this.$nextTick(function() { fetchHistory(this.$store, this.presentationid); this.scrollBottom()});
-        
     },
     props: ['presentationid', 'username', 'userid'],
     computed: {
@@ -139,8 +143,9 @@ export default {
                 channel: this.$props.presentationid,
                 message: {
                     text: this.text,
-                    userId: this.$props.userid,
-                    username: this.$props.username
+                    userId: this.$props.userid ?? uuid,
+                    username: this.$props.username ?? uuid,
+                    type: 'message'
                 }
             });
             // Reset the text input
@@ -160,15 +165,20 @@ export default {
                 message: {
                     text: this.text,
                     userId: this.$props.userid,
-                    username: this.$props.username
+                    username: this.$props.username,
+                    type: 'message'
                 }
             });
+            
             // Reset the text input
             this.text = "";
             this.scrollBottom();
         },
         scrollBottom() {
             this.$refs.chat.scrollTo(0, this.$refs.chat.scrollHeight);
+        },
+        loginRedirect() {
+            window.location.href = '/login';
         }
     }
 };

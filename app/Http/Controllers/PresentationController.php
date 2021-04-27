@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Events\PresentationOffer;
 use App\Events\PresentationAnswer;
 use Illuminate\Support\Facades\Log;
@@ -16,16 +17,34 @@ class PresentationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only(['index', 'store', 'destroy', 'show']);
+        $this->middleware('auth')->only(['store', 'destroy',]);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('presentation', ['streamId' => $streamId, 'type' => 'broadcaster', 'host_id' => Auth::id()]);
+        $valid = $this->validate($request, [
+            'presentation_id' => 'required',
+        ]);
+
+        $presentationLink = $request->presentation_id;
+        $presentation = Presentation::where('link', $presentationLink)->first();
+
+        if (!$presentation) {
+            return redirect()->back()->with('error', 'Could not find presentation.');
+        }
+
+        return redirect()->route('show', [
+            'link' => $presentationLink,
+        ])->with([
+            'presentation_id' => $presentationLink,
+            'presentation' => $presentation,
+            'type' => 'broadcaster',
+            'host_id' => $presentation->user_id
+        ]);
     }
 
     /**
@@ -65,19 +84,22 @@ class PresentationController extends Controller
         $presentation->title = $request->title;
         $presentation->user_id = $user->id;
         //make unique link
-        $presentation->link = (string) Str::uuid(); 
+        $presentation->link = (string) Str::uuid();
 
         //check if password is set then hash it
-        if ($request->password)
-        {
+        if ($request->password) {
             $presentation->password = Hash::make($request->password);
         }
 
         $user->presentations()->save($presentation);
         // error_log($presentation);
-
-
-        return response()->json(['link' => $presentation->link], 200);
+        return redirect()->route('show', [
+            'link' => $presentation->link
+        ])->with([
+            'presentation' => $presentation,
+            'presentation_id' => $presentation->link,
+            'host_id' => $user->id
+        ]);
     }
 
     /**
@@ -88,9 +110,9 @@ class PresentationController extends Controller
      */
     public function show($link)
     {
-        $presentation = Presentation::where('link', $link)->get();
+        $presentation = Presentation::where('link', $link)->first();
         //This method displays the selected URL associated presentation
-        return view('presentation', ['presentation' => $presentation]);
+        return view('presentation', ['presentation' => $presentation, 'presentation_id' => $link, 'host_id' => $presentation->user_id]);
     }
 
     /**
@@ -129,7 +151,6 @@ class PresentationController extends Controller
     }
 
     /*
-        
         WebRTC Methods
 
     */
@@ -149,5 +170,4 @@ class PresentationController extends Controller
 
         event(new PresentationAnswer($data));
     }
-
 }

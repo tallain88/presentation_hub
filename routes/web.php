@@ -15,14 +15,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home', ['auth_user' => Auth::user()]);
 });
 
 Auth::routes();
 
+Route::group(['prefix' => 'presentation', 'middleware' => 'auth'], function () {
+    Route::post('/', [App\Http\Controllers\PresentationController::class, 'store']);
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/presentation', [App\Http\Controllers\PresentationController::class, 'index'])->name('presentation');
 Route::get('/presentation/{link}', [App\Http\Controllers\PresentationController::class, 'show'])->name('show');
-Route::post('/presentation', [App\Http\Controllers\PresentationController::class, 'store']);
+
 Route::post('/presentation-offer', [App\Http\Controllers\PresentationController::class, 'makeStreamOffer']);
 Route::post('/presentation-answer', [App\Http\Controllers\PresentationController::class, 'makeStreamOffer']);
