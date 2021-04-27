@@ -18,9 +18,13 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('presentation-channel.{presentationId}', function($user) {
+    // return dd($user);
+    error_log($user);
     return['id' => $user->id, 'name' => $user->name];
 });
 
-Broadcast::channel('presentation-signal-channel.{presentationId}', function($user, $userId) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('presentation-signal-channel.{userId}', function($user, $userId) {
+    error_log("SIGNAL AWAYYY");
+    error_log($user->id);
+    return (int) $user->id === (int) $userId;
 });

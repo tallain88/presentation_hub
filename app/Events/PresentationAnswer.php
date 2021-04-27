@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PresentationAnswer
+class PresentationAnswer implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,7 +21,7 @@ class PresentationAnswer
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
         // answer constructor
         $this->data = $data;
@@ -34,6 +34,6 @@ class PresentationAnswer
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('presentation-signal-channel' . $this->data['broadcaster']);
+        return new PrivateChannel('presentation-signal-channel.' . $this->data['broadcaster']);
     }
 }

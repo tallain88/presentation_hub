@@ -6,17 +6,19 @@
         <button class="btn btn-secondary collapse-controls" data-toggle="collapse" href="#controls-collapse" data-target="#controls-collapse" aria-expanded="false" aria-controls="controls-collpase">Controls</button>
     </div>
     <div class="row fill">
-        {{-- @if ($host_id === auth()->id()) --}}
-        @php $isHost = True
+        @if ($host_id === auth()->user()->id)
+        @php 
+        $isHost = TRUE;
         @endphp
-            {{-- <presentation-controls class="controls-collapse" id="controls-collapse" :presentationId={{presentationId}}></presentation-controls> --}}
-        {{-- @else --}}
-        @php $isHost = False
+            <presentation-controls class="controls-collapse" id="controls-collapse" presentationId="{{$presentation->id}}"></presentation-controls>
+        @else
+        @php 
+        $isHost = FALSE;
         @endphp
-            <presentation-reactions class="controls-collapse" id="controls-collapse" presentationid={{'presentationId'}}></presentation-reactions>
-        {{-- @endif --}}
+            <presentation-reactions class="controls-collapse" id="controls-collapse" presentationid="{{$presentation->id}}"></presentation-reactions>
+        @endif
             <presentation-video 
-                presentationid={{'presentationId'}}
+                :presentation-id="{{$presentation->id}}"
                 :is-host="'{{$isHost}}'"
                 :user-id="'{{Auth::user()->id}}'"
                 :presentation="{{$presentation}}"

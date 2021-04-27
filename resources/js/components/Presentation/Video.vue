@@ -26,7 +26,7 @@
 
     export default {
         props: {
-            presentatioId: null,
+            presentationId: null,
             isHost: false,
             userId: null,
             turnServerUrl: null,
@@ -101,8 +101,11 @@
                 this.presentationStreamChannel = window.Echo.join(
                     `presentation-channel.${this.presentation.link}`
                 );
+                console.log("Viewer channel init");
+                console.log(this.presentationStreamChannel);
             },
             initializeViewerSignalOfferChannel() {
+                console.log("in signal offer");
                 window.Echo.private(`presentation-signal-channel.${this.userId}`).listen (
                     "PresentationOffer",
                     ({data}) => {
@@ -117,9 +120,14 @@
                     `presentation-channel.${this.presentation.link}`
                 );
 
+                console.log(this.presentationStreamChannel);
+
                 this.presentationStreamChannel.here((users) => {
                     this.streamingUsers = users;
+                    console.log("HERE");
                 });
+
+                console.log("after thing");
 
                 this.presentationStreamChannel.joining((user) => {
                     console.log("New user joined", user);
@@ -130,6 +138,7 @@
                     );
 
                     if (joiningUserIndex < 0) {
+                        console.log('first user');
                         this.streamingUsers.push(user);
 
                         // New user added, signal user
@@ -151,11 +160,15 @@
                         // Init events
                         this.allPeers[user.id].initEvents();
                     }
+
                 });
+
+                console.log("after joining");
+
 
                 this.presentationStreamChannel.leaving((user) => {
                     console.log(user.name, "left stream");
-
+                    console.log(user);
                     // destroy
                     this.allPeers[user.id].getPeer().destroy();
 
@@ -174,8 +187,9 @@
                 })
             },
             initializeSignalAnswerChannel() {
+                console.log("answer init");
                 window.Echo.private(`presentation-signal-channel.${this.userId}`).listen(
-                    "PresentaionAnswer",
+                    "PresentationAnswer",
                     ({data}) => {
                         console.log("Signal answer from channel");
 
@@ -195,21 +209,63 @@
                     }
                 )
             },
-            createPeer(){
-                const config = {
-                  iceServers: [
-                    {
-                      urls: "stun:stun.stunprotocol.org",
+            createPeer(stream, user, signalCallback){
+                let peer;
+
+                return {
+                    create: () => {
+                        peer = new Peer({
+                            initiator: true,
+                            trickle: false,
+                            stream: stream,
+                            config: {
+                                iceServers: [
+                                    {
+                                      urls: "stun:stun.stunprotocol.org",
+                                    },
+                                    {
+                                        urls: this.turnServerUrl,
+                                        username: this.turnServerUsername,
+                                        credential: this.turnServerCredential,
+                                    }
+                                ],
+                            },
+
+                        });
+
+                        console.log(peer);
                     },
-                    {
-                        urls: this.turnServerUrl,
-                        username: this.turnServerUsername,
-                        credential: this.turnServerCredential,
-                    }
-                  ],
+                    getPeer: () => peer,
+
+                    initEvents: () => {
+                        peer.on("signal", (data) => {
+                            // send offer to peer
+                            signalCallback(data, user);
+                        });
+
+                        peer.on("stream", (stream) => {
+                            console.log("onStream");
+                        });
+                        
+                        peer.on("track", (track, stream) => {
+                            console.log("onTrack");
+                        });
+                        
+                        peer.on("connect", () => {
+                            console.log("Broadcaster Peer connected");
+                        });
+                        
+                        peer.on("close", () => {
+                            console.log("Broadcaster Peer closed");
+                        });
+                        
+                        peer.on("error", (err) => {
+                            console.log("handle error gracefully");
+                        });
+                    },
                 };
             },
-            createViewerPeer() {
+            createViewerPeer(incomingOffer, broadcaster) {
                 const peer = new Peer({
                     iniator: false,
                     trickle: false,
@@ -234,6 +290,7 @@
                 // init peer events to connect to remote peer
                 this.handlePeerEvents(
                     peer,
+                    incomingOffer,
                     broadcaster,
                     this.removeBroadcastVideo
                 );
@@ -241,7 +298,7 @@
                 this.broadcasterPeer = peer;
             },
 
-            handlePeerEvents(peer, offer, broadcaster, callback) {
+            handlePeerEvents(peer, incomingOffer, broadcaster, callback) {
                 peer.on("signal", (data) => {
                     axios
                         .post("/presentation-answer", {
@@ -262,7 +319,7 @@
                 });
 
                 peer.on("track", (track, stream) => {
-                    consoe.log("On track");
+                    console.log("On track");
                 });
 
                 peer.on("connect", () => {
@@ -281,7 +338,7 @@
 
                 const updatedOffer = {
                     ...incomingOffer,
-                    sdp: `${incomingOffer}\n`,
+                    sdp: `${incomingOffer.sdp}\n`,
                 };
                 peer.signal(updatedOffer);
             },
@@ -307,38 +364,11 @@
                         console.log(response);
                     })
                     .catch((error) => {
+                        console.log("ERROR");
                         console.log(error);
                     });
             },
 
-            getPeer: () => peer,
-
-            initEvents: () => {
-                peer.on("signal", (data) => {
-                    // send offer to peer
-                    signalCallback(data, user);
-                });
-
-                peer.on("stream", (stream) => {
-                    console.log("onStream");
-                });
-                
-                peer.on("track", (track, stream) => {
-                    console.log("onTrack");
-                });
-                
-                peer.on("connect", () => {
-                    console.log("Broadcaster Peer connected");
-                });
-                
-                peer.on("close", () => {
-                    console.log("Broadcaster Peer closed");
-                });
-                
-                peer.on("error", (err) => {
-                    console.log("handle error gracefully");
-                });
-            },
             
             
 

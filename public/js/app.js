@@ -1902,6 +1902,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    presentationId: null,
     isHost: false,
     userId: null,
     turnServerUrl: null,
@@ -1992,10 +1993,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     initializeViewerStreamChannel: function initializeViewerStreamChannel() {
       this.presentationStreamChannel = window.Echo.join("presentation-channel.".concat(this.presentation.link));
+      console.log("Viewer channel init");
+      console.log(this.presentationStreamChannel);
     },
     initializeViewerSignalOfferChannel: function initializeViewerSignalOfferChannel() {
       var _this2 = this;
 
+      console.log("in signal offer");
       window.Echo["private"]("presentation-signal-channel.".concat(this.userId)).listen("PresentationOffer", function (_ref) {
         var data = _ref.data;
         console.log("signal offer from priv channel");
@@ -2008,9 +2012,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this3 = this;
 
       this.presentationStreamChannel = window.Echo.join("presentation-channel.".concat(this.presentation.link));
+      console.log(this.presentationStreamChannel);
       this.presentationStreamChannel.here(function (users) {
         _this3.streamingUsers = users;
+        console.log("HERE");
       });
+      console.log("after thing");
       this.presentationStreamChannel.joining(function (user) {
         console.log("New user joined", user); // if user is not already joinedm, add
 
@@ -2019,6 +2026,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
 
         if (joiningUserIndex < 0) {
+          console.log('first user');
+
           _this3.streamingUsers.push(user); // New user added, signal user
 
 
@@ -2033,8 +2042,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this3.allPeers[user.id].initEvents();
         }
       });
+      console.log("after joining");
       this.presentationStreamChannel.leaving(function (user) {
-        console.log(user.name, "left stream"); // destroy
+        console.log(user.name, "left stream");
+        console.log(user); // destroy
 
         _this3.allPeers[user.id].getPeer().destroy(); // remove peer object
 
@@ -2055,7 +2066,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     initializeSignalAnswerChannel: function initializeSignalAnswerChannel() {
       var _this4 = this;
 
-      window.Echo["private"]("presentation-signal-channel.".concat(this.userId)).listen("PresentaionAnswer", function (_ref2) {
+      console.log("answer init");
+      window.Echo["private"]("presentation-signal-channel.".concat(this.userId)).listen("PresentationAnswer", function (_ref2) {
         var data = _ref2.data;
         console.log("Signal answer from channel");
 
@@ -2072,18 +2084,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
     },
-    createPeer: function createPeer() {
-      var config = {
-        iceServers: [{
-          urls: "stun:stun.stunprotocol.org"
-        }, {
-          urls: this.turnServerUrl,
-          username: this.turnServerUsername,
-          credential: this.turnServerCredential
-        }]
+    createPeer: function createPeer(stream, user, signalCallback) {
+      var _this5 = this;
+
+      var peer;
+      return {
+        create: function create() {
+          peer = new (simple_peer__WEBPACK_IMPORTED_MODULE_2___default())({
+            initiator: true,
+            trickle: false,
+            stream: stream,
+            config: {
+              iceServers: [{
+                urls: "stun:stun.stunprotocol.org"
+              }, {
+                urls: _this5.turnServerUrl,
+                username: _this5.turnServerUsername,
+                credential: _this5.turnServerCredential
+              }]
+            }
+          });
+          console.log(peer);
+        },
+        getPeer: function getPeer() {
+          return peer;
+        },
+        initEvents: function initEvents() {
+          peer.on("signal", function (data) {
+            // send offer to peer
+            signalCallback(data, user);
+          });
+          peer.on("stream", function (stream) {
+            console.log("onStream");
+          });
+          peer.on("track", function (track, stream) {
+            console.log("onTrack");
+          });
+          peer.on("connect", function () {
+            console.log("Broadcaster Peer connected");
+          });
+          peer.on("close", function () {
+            console.log("Broadcaster Peer closed");
+          });
+          peer.on("error", function (err) {
+            console.log("handle error gracefully");
+          });
+        }
       };
     },
-    createViewerPeer: function createViewerPeer() {
+    createViewerPeer: function createViewerPeer(incomingOffer, broadcaster) {
       var peer = new (simple_peer__WEBPACK_IMPORTED_MODULE_2___default())({
         iniator: false,
         trickle: false,
@@ -2105,11 +2154,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         direction: "recvonly"
       }); // init peer events to connect to remote peer
 
-      this.handlePeerEvents(peer, broadcaster, this.removeBroadcastVideo);
+      this.handlePeerEvents(peer, incomingOffer, broadcaster, this.removeBroadcastVideo);
       this.broadcasterPeer = peer;
     },
-    handlePeerEvents: function handlePeerEvents(peer, offer, broadcaster, callback) {
-      var _this5 = this;
+    handlePeerEvents: function handlePeerEvents(peer, incomingOffer, broadcaster, callback) {
+      var _this6 = this;
 
       peer.on("signal", function (data) {
         axios__WEBPACK_IMPORTED_MODULE_4___default().post("/presentation-answer", {
@@ -2123,10 +2172,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
       peer.on("stream", function (stream) {
         // show stream
-        _this5.$refs.webcam.srcObject = stream;
+        _this6.$refs.webcam.srcObject = stream;
       });
       peer.on("track", function (track, stream) {
-        consoe.log("On track");
+        console.log("On track");
       });
       peer.on("connect", function () {
         console.log("viewer peer connected");
@@ -2141,7 +2190,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
 
       var updatedOffer = _objectSpread(_objectSpread({}, incomingOffer), {}, {
-        sdp: "".concat(incomingOffer, "\n")
+        sdp: "".concat(incomingOffer.sdp, "\n")
       });
 
       peer.signal(updatedOffer);
@@ -2163,31 +2212,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
+        console.log("ERROR");
         console.log(error);
-      });
-    },
-    getPeer: function getPeer() {
-      return peer;
-    },
-    initEvents: function initEvents() {
-      peer.on("signal", function (data) {
-        // send offer to peer
-        signalCallback(data, user);
-      });
-      peer.on("stream", function (stream) {
-        console.log("onStream");
-      });
-      peer.on("track", function (track, stream) {
-        console.log("onTrack");
-      });
-      peer.on("connect", function () {
-        console.log("Broadcaster Peer connected");
-      });
-      peer.on("close", function () {
-        console.log("Broadcaster Peer closed");
-      });
-      peer.on("error", function (err) {
-        console.log("handle error gracefully");
       });
     }
   }
@@ -2300,8 +2326,8 @@ function fetchHistory(store, presentationId) {
     count: 20,
     stringifiedTimeToken: true // false is the default
 
-  }, function (status, resposne) {
-    var messages = resposne.messages;
+  }, function (status, response) {
+    var messages = response.messages;
     messages.forEach(function (message) {
       store.commit("addHistory", {
         history: [message]

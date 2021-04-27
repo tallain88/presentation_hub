@@ -86,8 +86,8 @@ function fetchHistory(store, presentationId) {
             count: 20,
             stringifiedTimeToken: true // false is the default
         },
-        (status, resposne) => {
-            const messages = resposne.messages;
+        (status, response) => {
+            const messages = response.messages;
             messages.forEach(message => {
                 store.commit("addHistory", { history: [message] });
             });

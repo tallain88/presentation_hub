@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PresentationOffer
+class PresentationOffer implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -34,6 +34,7 @@ class PresentationOffer
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('presentation-signal-channel');
+        error_log($this->data['receiver']['id']);
+        return new PrivateChannel('presentation-signal-channel.' . $this->data['receiver']['id']);
     }
 }
