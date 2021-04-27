@@ -5,22 +5,34 @@
     >
         <div class="card chat bg-gray list mt-2" ref="chat">
             <div v-for="historyMsg in history" v-bind:key="historyMsg.id" class="mt-2">
+                <presentation-reaction-listing
+                    v-if="historyMsg.userId !== userid && historyMsg.type === 'reaction'"
+                    v-bind:emoji="historyMsg.text"
+                    v-bind:username="historyMsg.username"
+                    >
+                </presentation-reaction-listing>
                 <presentation-chat-listing-received
-                    v-if="historyMsg.userId !== userid"
+                    v-if="historyMsg.userId !== userid && historyMsg.type === 'message'"
                     v-bind:userid="historyMsg.userId"
                     v-bind:text="historyMsg.text"
                     v-bind:username="historyMsg.username"
                 ></presentation-chat-listing-received>
                  <presentation-chat-listing-sent
-                    v-if="historyMsg.userId === userid"
+                    v-if="historyMsg.userId === userid && historyMsg.type === 'message'"
                     v-bind:userid="historyMsg.userId"
                     v-bind:text="historyMsg.text"
                     v-bind:username="historyMsg.username"
                 ></presentation-chat-listing-sent>
             </div>
             <div v-for="msg in vueChatMsg" v-bind:key="msg.id">
+                <presentation-reaction-listing
+                    v-if="msg.message.userId === userid && msg.message.type === 'reaction'"
+                    v-bind:emoji="msg.message.text"
+                    username='You'
+                >
+                </presentation-reaction-listing>
                 <presentation-chat-listing-sent
-                    v-if="msg.message.userId === userid"
+                    v-if="msg.message.userId === userid && msg.message.type === 'message'"
                     v-bind:userid="msg.message.userId"
                     v-bind:text="msg.message.text"
                     v-bind:username="msg.message.username"
@@ -153,19 +165,19 @@ export default {
             this.scrollBottom();
         },
         submitMessage() {
-            console.log(this.text);
             if (this.text.length === 0) {
                 return;
             }
 
-            console.log(this.$props.username);
+            const username = this.$props.username === '' ? this.uuid : this.$props.username;
+            console.log('username = ' , username);
 
             this.$pnPublish({
                 channel: this.$props.presentationid,
                 message: {
                     text: this.text,
-                    userId: this.$props.userid,
-                    username: this.$props.username,
+                    userId: this.$props.userid ?? this.uuid,
+                    username: this.$props.username === '' ? this.uuid : this.$props.username,
                     type: 'message'
                 }
             });
