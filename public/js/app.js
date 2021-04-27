@@ -2317,6 +2317,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2367,6 +2372,8 @@ function fetchHistory(store, presentationId) {
   },
   methods: {
     submitMessageOnEnter: function submitMessageOnEnter(event) {
+      var _this$$props$userid, _this$$props$username;
+
       if (!event.shiftKey) {
         event.preventDefault();
       } else {
@@ -2381,8 +2388,9 @@ function fetchHistory(store, presentationId) {
         channel: this.$props.presentationid,
         message: {
           text: this.text,
-          userId: this.$props.userid,
-          username: this.$props.username
+          userId: (_this$$props$userid = this.$props.userid) !== null && _this$$props$userid !== void 0 ? _this$$props$userid : uuid,
+          username: (_this$$props$username = this.$props.username) !== null && _this$$props$username !== void 0 ? _this$$props$username : uuid,
+          type: 'message'
         }
       }); // Reset the text input
 
@@ -2402,7 +2410,8 @@ function fetchHistory(store, presentationId) {
         message: {
           text: this.text,
           userId: this.$props.userid,
-          username: this.$props.username
+          username: this.$props.username,
+          type: 'message'
         }
       }); // Reset the text input
 
@@ -2411,6 +2420,9 @@ function fetchHistory(store, presentationId) {
     },
     scrollBottom: function scrollBottom() {
       this.$refs.chat.scrollTo(0, this.$refs.chat.scrollHeight);
+    },
+    loginRedirect: function loginRedirect() {
+      window.location.href = '/login';
     }
   }
 });
@@ -2613,9 +2625,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
   methods: {
     handleSourceChange: function handleSourceChange(e) {
       console.log("Emmitting files: ", e.target.files);
@@ -2733,6 +2742,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var pubnub_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pubnub-vue */ "./node_modules/pubnub-vue/src/index.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2778,19 +2795,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 var emoji = __webpack_require__(/*! emoji-dictionary */ "./node_modules/emoji-dictionary/lib/index.js");
+
+function fetchHistory(store, presentationId) {
+  pubnub_vue__WEBPACK_IMPORTED_MODULE_0__.default.getInstance().history({
+    channel: presentationId,
+    count: 20,
+    stringifiedTimeToken: true // false is the default
+
+  }, function (status, resposne) {
+    var messages = resposne.messages;
+    messages.forEach(function (message) {
+      store.commit("addHistory", {
+        history: [message]
+      });
+    });
+  });
+}
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       searchResults: [],
-      emojiSearch: ''
+      vueChatMsg: this.$pnGetMessage(this.$props.presentationid),
+      emojiSearch: "",
+      userId: this.$props.userid
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.$pnSubscribe({
+      channels: [this.presentationid]
+    });
   },
-  computed: {
+  computed: _objectSpread(_objectSpread({
     emojiChunks: function emojiChunks() {
       var chunkArray = this.searchResults.length > 0 ? this.searchResults : emoji.unicode;
       var CHUNK_SIZE = Math.min(4, chunkArray.length);
@@ -2803,10 +2871,14 @@ var emoji = __webpack_require__(/*! emoji-dictionary */ "./node_modules/emoji-di
 
       return res;
     }
-  },
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+    uuid: "getMyUuid"
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+    history: "getHistoryMsgs"
+  })),
   methods: {
     emojiSearchHandler: function emojiSearchHandler(event) {
-      var a = '';
+      var a = "";
       var search = event.target.value.toLowerCase().replaceAll(" ", "_");
       console.log(search);
       this.searchResults = emoji.names.reduce(function (results, keyword) {
@@ -2820,8 +2892,26 @@ var emoji = __webpack_require__(/*! emoji-dictionary */ "./node_modules/emoji-di
     },
     emojiTitle: function emojiTitle(emojiUnicode) {
       return emoji.getName(emojiUnicode);
+    },
+    sendReaction: function sendReaction(emoji) {
+      var _this$$props$userid, _this$$props$username;
+
+      console.log(this.$props.username);
+      this.$pnPublish({
+        channel: this.$props.presentationid,
+        message: {
+          text: emoji,
+          type: 'reaction',
+          userId: (_this$$props$userid = this.$props.userid) !== null && _this$$props$userid !== void 0 ? _this$$props$userid : uuid,
+          username: (_this$$props$username = this.$props.username) !== null && _this$$props$username !== void 0 ? _this$$props$username : uuid
+        }
+      }); // Reset the text input
+
+      this.text = "";
+      this.scrollBottom();
     }
-  }
+  },
+  props: ['userid', 'presentationid', 'username']
 });
 
 /***/ }),
@@ -2971,11 +3061,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      auth_user: document.querySelector("meta[name='user-id']").getAttribute('content')
+    };
   },
-  methods: {}
+  methods: {
+    login: function login() {
+      window.location.href = '/login';
+    }
+  }
 });
 
 /***/ }),
@@ -3029,9 +3130,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   },
   methods: {}
 });
@@ -3099,28 +3243,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       password: null,
-      title: null
+      title: null,
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     };
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
+  mounted: function mounted() {},
   methods: {
     handleStartPresentation: function handleStartPresentation() {
-      var self = this;
       var body = {
-        "title": this.title,
-        'password': this.password
+        title: this.title,
+        password: this.password
       };
       console.log(body);
       console.log("http://localhost:8000");
-      axios.post("http://localhost:8000" + '/presentation', body).then(function (response) {
+      axios.post("http://localhost:8000" + "/presentation", body).then(function (response) {
         console.log(response.data);
-        window.location.href = '/presentation/' + response.data.link;
       }, function (error) {
         console.log(error);
       });
@@ -59679,11 +59860,11 @@ var render = function() {
       attrs: { id: "video", autoplay: "" }
     }),
     _vm._v(" "),
-    _vm.isHost
+    _vm.isHost == _vm.userId
       ? _c("button", { on: { click: _vm.stopStream } }, [_vm._v("Stop Stream")])
       : _vm._e(),
     _vm._v(" "),
-    _vm.isHost
+    _vm.isHost == _vm.userId
       ? _c("button", { on: { click: _vm.startStream } }, [
           _vm._v("Start Stream")
         ])
@@ -59777,47 +59958,62 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.text,
-              expression: "text"
-            }
-          ],
-          staticClass: "input bg-main",
-          attrs: { placeholder: "Type here to chat..." },
-          domProps: { value: _vm.text },
-          on: {
-            keydown: function($event) {
-              if (
-                !$event.type.indexOf("key") &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
+      _vm.userId
+        ? _c("div", [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.text,
+                  expression: "text"
+                }
+              ],
+              staticClass: "input bg-main",
+              attrs: { placeholder: "Type here to chat..." },
+              domProps: { value: _vm.text },
+              on: {
+                keydown: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.submitMessageOnEnter($event)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.text = $event.target.value
+                }
               }
-              return _vm.submitMessageOnEnter($event)
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.text = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn send btn-secondary",
-            on: { click: _vm.submitMessage }
-          },
-          [_vm._v("\n            Send\n        ")]
-        )
-      ])
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn send btn-secondary",
+                on: { click: _vm.submitMessage }
+              },
+              [_vm._v("\n            Send\n        ")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.userId
+        ? _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "btn send btn-secondary",
+                on: { click: _vm.loginRedirect }
+              },
+              [_vm._v("\n            Login to Chat.\n        ")]
+            )
+          ])
+        : _vm._e()
     ]
   )
 }
@@ -59847,7 +60043,7 @@ var render = function() {
   return _c("div", [
     _c("img", {
       staticClass: "rounded-circle mt-1 mb-1",
-      attrs: { height: "80px", src: "images/sender_image_placeholder.svg" }
+      attrs: { height: "80px", src: "/images/sender_image_placeholder.svg" }
     }),
     _vm._v(" "),
     _c("p", { staticClass: "name" }, [_vm._v(_vm._s(_vm.username))])
@@ -59951,7 +60147,16 @@ var render = function() {
   return _c("div", { staticClass: "col-lg-2 card bg-second" }, [
     _c("div", { staticClass: "card-body" }, [
       _c("div", { staticClass: "container-fluid" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "row mb-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-third",
+              on: { click: _vm.copyPresentationId }
+            },
+            [_vm._v("Copy Presentation Id")]
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-3" }, [
           _c(
@@ -59983,7 +60188,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(1)
+        _vm._m(0)
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [_c("presentation-user-list")], 1),
@@ -59993,14 +60198,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-3" }, [
-      _c("button", { staticClass: "btn btn-third" }, [_vm._v("Copy Link")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -60249,9 +60446,18 @@ var render = function() {
                 {
                   key: index,
                   staticClass: "col-2 emoji m-2",
-                  attrs: { title: _vm.emojiTitle(emoji) }
+                  attrs: { title: _vm.emojiTitle(emoji) },
+                  on: {
+                    click: function($event) {
+                      return _vm.sendReaction(emoji)
+                    }
+                  }
                 },
-                [_vm._v(_vm._s(emoji))]
+                [
+                  _vm._v(
+                    "\n                " + _vm._s(emoji) + "\n            "
+                  )
+                ]
               )
             }),
             0
@@ -60282,7 +60488,7 @@ var staticRenderFns = [
             "aria-controls": "chat-collapse"
           }
         },
-        [_vm._v("Hide Chat")]
+        [_vm._v("\n            Hide Chat\n        ")]
       )
     ])
   }
@@ -60368,12 +60574,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-4" }, [
-      _c("img", { staticClass: "icon", attrs: { src: "images/account.svg" } }),
+      _c("img", { staticClass: "icon", attrs: { src: "/images/account.svg" } }),
       _vm._v(" "),
       _c("img", {
         staticClass: "icon",
         attrs: {
-          src: "images/close.svg",
+          src: "/images/close.svg",
           "data-toggle": "modal",
           "data-target": "#kick-user-modal"
         }
@@ -60411,9 +60617,37 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _vm._m(2),
+      _vm.auth_user
+        ? _c("div", { staticClass: "row mb-2 justify-content-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "presentation-btn btn btn-secondary",
+                attrs: { "data-toggle": "modal", "data-target": "#shareModal" }
+              },
+              [_vm._v("\n                Share a Presentation\n        ")]
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
-      _vm._m(3),
+      !_vm.auth_user
+        ? _c("div", { staticClass: "row mb-2 justify-content-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "presentation-btn btn btn-secondary link",
+                on: { click: _vm.login }
+              },
+              [
+                _vm._v(
+                  "\n                Login to Share a Presentation\n        "
+                )
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._m(2),
       _vm._v(" "),
       _c("img", {
         attrs: {
@@ -60452,21 +60686,6 @@ var staticRenderFns = [
           "We help collaborators share their beautiful presentations across the internet with anyone."
         )
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-2 justify-content-center" }, [
-      _c(
-        "button",
-        {
-          staticClass: "presentation-btn btn btn-secondary",
-          attrs: { "data-toggle": "modal", "data-target": "#shareModal" }
-        },
-        [_vm._v("\n                Share a Presentation\n        ")]
-      )
     ])
   },
   function() {
@@ -60535,42 +60754,46 @@ var staticRenderFns = [
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header bg-main" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title text-white",
-                    attrs: { id: "exampleModalLabel" }
-                  },
-                  [_vm._v("Join a Presentation")]
-                ),
+              _c("form", { attrs: { method: "GET", action: "presentation" } }, [
+                _c("div", { staticClass: "modal-header bg-main" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title text-white",
+                      attrs: { id: "exampleModalLabel" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Join a Presentation\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body bg-main" }, [
-                _c("form", [
+                _c("div", { staticClass: "modal-body bg-main" }, [
                   _c("div", { staticClass: "form-group row" }, [
                     _c(
                       "label",
                       {
                         staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "title" }
+                        attrs: { for: "presentation_id" }
                       },
                       [_vm._v("Presentation Id")]
                     ),
@@ -60578,8 +60801,8 @@ var staticRenderFns = [
                     _c("div", { staticClass: "col-sm-8" }, [
                       _c("input", {
                         attrs: {
-                          id: "title",
-                          name: "title",
+                          id: "presentation_id",
+                          name: "presentation_id",
                           type: "text",
                           placeholder: "Presentation Id",
                           required: ""
@@ -60593,43 +60816,51 @@ var staticRenderFns = [
                       "label",
                       {
                         staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "viewer-limit" }
+                        attrs: { for: "password" }
                       },
-                      [_vm._v("Password")]
+                      [_vm._v("Password (optional)")]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-sm-8" }, [
                       _c("input", {
                         attrs: {
-                          id: "viewer-limit",
-                          name: "viewer-limit",
+                          id: "password",
+                          name: "password",
                           type: "password",
                           placeholder: "Password"
                         }
                       })
                     ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer bg-main" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Close")]
-                ),
+                ]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button" }
-                  },
-                  [_vm._v("Join Presentation")]
-                )
+                _c("div", { staticClass: "modal-footer bg-main" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Close\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "submit" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Join Presentation\n                    "
+                      )
+                    ]
+                  )
+                ])
               ])
             ])
           ]
@@ -60681,116 +60912,96 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body bg-main" }, [
-              _c(
-                "form",
-                { attrs: { method: "POST", action: "/presentation" } },
-                [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "title" }
-                      },
-                      [_vm._v("Presentation Name")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-8" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.title,
-                            expression: "title"
-                          }
-                        ],
-                        attrs: {
-                          id: "title",
-                          name: "title",
-                          placeholder: "Presentation Name",
-                          value: "",
-                          required: ""
-                        },
-                        domProps: { value: _vm.title },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.title = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-sm-4 col-form-label text-white",
-                        attrs: { for: "password" }
-                      },
-                      [_vm._v("Password (optional)")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-8" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.password,
-                            expression: "password"
-                          }
-                        ],
-                        attrs: {
-                          id: "password",
-                          name: "password",
-                          type: "password",
-                          placeholder: "Password"
-                        },
-                        domProps: { value: _vm.password },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.password = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer bg-main" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v("Close")]
-              ),
+            _c("form", { attrs: { method: "POST", action: "/presentation" } }, [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary",
-                  attrs: { type: "submit" },
-                  on: { click: _vm.handleStartPresentation }
-                },
-                [_vm._v("Start Presentation")]
-              )
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body bg-main" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-4 col-form-label text-white",
+                      attrs: { for: "title" }
+                    },
+                    [_vm._v("Presentation Name")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-8" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.title,
+                          expression: "title"
+                        }
+                      ],
+                      attrs: {
+                        id: "title",
+                        name: "title",
+                        placeholder: "Presentation Name",
+                        value: "",
+                        required: ""
+                      },
+                      domProps: { value: _vm.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.title = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-4 col-form-label text-white",
+                      attrs: { for: "password" }
+                    },
+                    [_vm._v("Password (optional)")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-8" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.password,
+                          expression: "password"
+                        }
+                      ],
+                      attrs: {
+                        id: "password",
+                        name: "password",
+                        type: "password",
+                        placeholder: "Password"
+                      },
+                      domProps: { value: _vm.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
             ])
           ])
         ]
@@ -60810,7 +61021,11 @@ var staticRenderFns = [
           staticClass: "modal-title text-white",
           attrs: { id: "exampleModalLabel" }
         },
-        [_vm._v("Share a Presentation")]
+        [
+          _vm._v(
+            "\n                        Share a Presentation\n                    "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -60831,28 +61046,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
+    return _c("div", { staticClass: "modal-footer bg-main" }, [
       _c(
-        "label",
+        "button",
         {
-          staticClass: "col-sm-4 col-form-label text-white",
-          attrs: { for: "viewer-limit" }
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
         },
-        [_vm._v("Viewer Limit")]
+        [_vm._v("\n                        Close\n                    ")]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          attrs: {
-            id: "viewer-limit",
-            name: "viewer-limit",
-            type: "number",
-            placeholder: "5",
-            value: "5",
-            required: ""
-          }
-        })
-      ])
+      _c(
+        "button",
+        { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
+        [
+          _vm._v(
+            "\n                        Start Presentation\n                    "
+          )
+        ]
+      )
     ])
   }
 ]

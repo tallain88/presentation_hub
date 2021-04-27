@@ -3,8 +3,8 @@
         <video id="video" autoplay class="container-fluid" :key=source.id  ref="webcam"></video>
             
         </video>
-        <button v-if=isHost @click=stopStream>Stop Stream</button>
-        <button v-if=isHost @click=startStream>Start Stream</button>
+        <button v-if="isHost == userId" @click=stopStream>Stop Stream</button>
+        <button v-if="isHost == userId" @click=startStream>Start Stream</button>
         <button v-else @click=connectToStream>Connect to Stream</button>
     </div>
 </template>

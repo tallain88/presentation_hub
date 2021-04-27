@@ -3,7 +3,7 @@
         <div class="card-body">
            <div class="container-fluid">
                 <div class="row mb-3">
-                    <button class="btn btn-third">Copy Link</button>
+                    <button class="btn btn-third" @click=copyPresentationId>Copy Presentation Id</button>
                 </div>
                 <div class="row mb-3">
                   <label class="btn btn-third" for="source-select">
@@ -54,9 +54,6 @@
     import {eventBus} from "../../../app";
 
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        },
         methods: {
           handleSourceChange(e){
             console.log("Emmitting files: ", e.target.files);

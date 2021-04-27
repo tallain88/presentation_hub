@@ -6,9 +6,14 @@
         <div class="row mb-2 justify-content-center">
             <h3 class="text" id="catch-line">We help collaborators share their beautiful presentations across the internet with anyone.</h3>
         </div>
-        <div class="row mb-2 justify-content-center">
+        <div class="row mb-2 justify-content-center" v-if='auth_user'>
             <button class="presentation-btn btn btn-secondary" data-toggle="modal" data-target="#shareModal">
                     Share a Presentation
+            </button>
+        </div>
+        <div class="row mb-2 justify-content-center" v-if='!auth_user'>
+            <button class="presentation-btn btn btn-secondary link" @click=login>
+                    Login to Share a Presentation
             </button>
         </div>
         <div class="row justify-content-center">
@@ -58,11 +63,15 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        data() {
+            return {
+                auth_user: document.querySelector("meta[name='user-id']").getAttribute('content'),
+            }
         },
         methods: {
-
+            login() {
+                window.location.href = '/login';
+            }
         }
     }
 </script>
