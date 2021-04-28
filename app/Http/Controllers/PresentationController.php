@@ -32,9 +32,16 @@ class PresentationController extends Controller
 
         $presentationLink = $request->presentation_id;
         $presentation = Presentation::where('link', $presentationLink)->first();
+        if (!$presentation) {
+            return redirect()->back()->with('error', 'That presentation does not exist.');
+        }
+
+        if ($presentation->user_id !== Auth::id() && $presentation->password && !Hash::check($request->password, $presentation->password)) {
+            return redirect()->back()->with('error', 'That password is incorrect');
+        }
 
         if (!$presentation) {
-            return redirect()->back()->with('error', 'Could not find presentation.');
+            return redirect()->back()->with('error', 'Could not find the requested presentation');
         }
 
         return redirect()->route('show', [
@@ -92,7 +99,7 @@ class PresentationController extends Controller
         }
 
         $user->presentations()->save($presentation);
-        // error_log($presentation);
+
         return redirect()->route('show', [
             'link' => $presentation->link
         ])->with([

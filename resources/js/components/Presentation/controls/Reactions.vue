@@ -106,8 +106,15 @@ export default {
         this.$pnSubscribe({
             channels: [this.presentationid]
         });
+        this.$nextTick(function() { fetchHistory(this.$store, this.presentationid); });
     },
     computed: {
+        ...mapGetters({
+            uuid: "getMyUuid"
+        }),
+        ...mapGetters({
+            history: "getHistoryMsgs"
+        }),
         emojiChunks: function() {
             const chunkArray =
                 this.searchResults.length > 0
@@ -121,12 +128,6 @@ export default {
             }
             return res;
         },
-        ...mapGetters({
-            uuid: "getMyUuid"
-        }),
-        ...mapGetters({
-            history: "getHistoryMsgs"
-        })
     },
     methods: {
         emojiSearchHandler: function(event) {
@@ -134,33 +135,32 @@ export default {
             const search = event.target.value
                 .toLowerCase()
                 .replaceAll(" ", "_");
-            console.log(search);
             this.searchResults = emoji.names.reduce((results, keyword) => {
                 if (keyword.includes(search)) {
                     results.push(emoji.getUnicode(keyword));
                 }
                 return results;
             }, []);
-            console.log(this.searchResults);
         },
         emojiTitle(emojiUnicode) {
             return emoji.getName(emojiUnicode);
         },
         sendReaction(emoji) {
-            console.log(this.$props.username);
+
+            const username = this.$props.username === '' ? this.uuid : this.$props.username;
+
             this.$pnPublish({
                 channel: this.$props.presentationid,
                 message: {
                     text: emoji,
                     type: 'reaction',
-                    userId: this.$props.userid ?? uuid,
-                    username: this.$props.username ?? uuid,
+                    userId: this.$props.userid ?? this.uuid,
+                    username
                 }
             });
 
             // Reset the text input
             this.text = "";
-            this.scrollBottom();
         }
     },
     props: ['userid', 'presentationid', 'username']

@@ -141,7 +141,7 @@ Vue.component(
     require("./components/Presentation/chat/ChatListingSent.vue").default
 );
 Vue.component(
-    "presentation-chat-reaction",
+    "presentation-reaction-listing",
     require("./components/Presentation/chat/Reaction.vue").default
 );
 
