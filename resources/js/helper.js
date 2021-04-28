@@ -44,3 +44,16 @@ export const getPermissions = () => {
     });
 }
 
+export const getScreenShare = () => {
+    return new Promise((resolve, reject) =>{
+        navigator.mediaDevices
+            .getDisplayMedia({ video: true, audio: true})
+            .then(screenShareStream => {
+                resolve(screenShareStream);
+            })
+            .catch(error => {
+                resolve(error);
+            });
+    });
+}
+

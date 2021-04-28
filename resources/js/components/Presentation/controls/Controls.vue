@@ -2,17 +2,16 @@
    <div class="col-lg-2 card bg-second">
         <div class="card-body">
            <div class="container-fluid">
-                <div class="row mb-3">
+               <!--  <div class="row mb-3">
                     <button class="btn btn-third" @click=copyPresentationId>Copy Presentation Id</button>
-                </div>
+                </div> -->
                 <div class="row mb-3">
-                  <label class="btn btn-third" for="source-select">
-                     <input id="source-select" type=file hidden @change="handleSourceChange" accept="video/*">Select File</input>
-                  </label>
+                  <button @click=handleScreenShareSelect class="btn btn-third">Screen Share</button>
 
                 </div>
                 <div class="row mb-4">
                     <button @click=handleWebcamSelect class="btn btn-third">Select Webcam</button>
+                    
                   </div>
                 <div class="row mb-4">
                     <button class="btn btn-third collapse-chat" data-toggle="collapse" href="#chat-collapse" data-target="#chat-collapse" aria-expanded="true" aria-controls="chat-collapse">Hide Chat</button>
@@ -55,10 +54,6 @@
 
     export default {
         methods: {
-          handleSourceChange(e){
-            console.log("Emmitting files: ", e.target.files);
-            eventBus.$emit('source', e.target.files[0]);
-          },
           handleWebcamSelect(e){
             const constraints = window.constraints = {
               audio: false,
@@ -74,7 +69,12 @@
                 alert("Browser not supported");
               })
             
+          },
+          handleScreenShareSelect(e){
+            console.log('bus');
+            eventBus.$emit('setScreenShare', e);
           }
-        }
+        },
+        
     }
 </script>

@@ -34,7 +34,6 @@ class PresentationOffer implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        error_log($this->data['receiver']['id']);
         return new PrivateChannel('presentation-signal-channel.' . $this->data['receiver']['id']);
     }
 }

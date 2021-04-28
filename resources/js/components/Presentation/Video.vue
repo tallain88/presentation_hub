@@ -3,9 +3,15 @@
         <video id="video" autoplay class="container-fluid" :key=source.id  ref="webcam"></video>
             
         </video>
-        <button v-if="isHost == userId" @click=stopStream>Stop Stream</button>
-        <button v-if="isHost == userId" @click=startStream>Start Stream</button>
-        <button v-else @click=connectToStream>Connect to Stream</button>
+        <div v-if="isHost == userId" class="row justify-content-center">
+            <button class="btn btn-secondary" @click=stopStream>Stop Stream</button>
+            <button class="btn btn-secondary" @click=startStream>Start Stream</button>
+        </div>
+        <div v-else class="row justify-content-center">
+            <button class="btn btn-secondary" @click=connectToStream>Connect to Stream</button>
+            
+        </div>
+        
     </div>
 </template>
 
@@ -21,7 +27,7 @@
 <script>
     import {eventBus} from "../../app";
     import Peer from "simple-peer";
-    import {getPermissions} from "../../helper";
+    import {getPermissions, getScreenShare} from "../../helper";
     import axios from 'axios';
 
     export default {
@@ -45,6 +51,8 @@
                 presentationStreamChannel: null,
                 streamingUsers: [],
                 currentlyContactedUser: null,
+                isWebcam: false,
+                isScreenShare: false,
                 allPeers: {},
             }
         },
@@ -56,12 +64,13 @@
             // attach event listener
             eventBus.$on('source', this.updateSource);
             eventBus.$on('webcam', this.updateWebcam);
-
+            eventBus.$on('setScreenShare', this.setScreenShare);
         },
         beforeDestroy(){
            // remove event listener
            EventBus.$off("source", this.updateSource)
            EventBus.$off("webcam", this.updateWebcam)
+           EventBus.$off("setScreenShare", this.setScreenShare)
         },
         methods: {
             // update video source and create URL object
@@ -75,11 +84,22 @@
                 const videoTracks = stream.getVideoTracks();
                 // window.stream = stream;
                 this.source = stream;
-                // this.$refs.webcam.srcObject = stream;
-                
+                this.isWebcam = true;
+                this.isScreenShare = false;
+            },
+            setScreenShare(){
+                this.isScreenShare = true;
+                this.isWebcam = false;
             },
             async startStream(){
-                const stream = await getPermissions();
+                let stream;
+                if (this.isWebcam){
+                    stream = await getPermissions();
+                }
+
+                if (this.isScreenShare){
+                    stream = await getScreenShare();
+                }
                 this.$refs.webcam.srcObject = stream;
                 this.initializeStreamChannel();
                 this.initializeSignalAnswerChannel();
@@ -199,7 +219,7 @@
                         if (data.answer.sdp) {
                             const updatedSignal = {
                                 ...data.answer,
-                                dsp: `${data.answer.sdp}\n`,
+                                sdp: `${data.answer.sdp}\n`,
                             };
 
                             this.allPeers[this.currentlyContactedUser]
@@ -259,7 +279,8 @@
                             console.log("Broadcaster Peer closed");
                         });
                         
-                        peer.on("error", (err) => {
+                        peer.on("error", (error) => {
+                            console.log(error);
                             console.log("handle error gracefully");
                         });
                     },

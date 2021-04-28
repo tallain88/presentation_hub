@@ -1896,6 +1896,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1920,6 +1926,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       presentationStreamChannel: null,
       streamingUsers: [],
       currentlyContactedUser: null,
+      isWebcam: false,
+      isScreenShare: false,
       allPeers: {}
     };
   },
@@ -1931,11 +1939,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // attach event listener
     _app__WEBPACK_IMPORTED_MODULE_1__.eventBus.$on('source', this.updateSource);
     _app__WEBPACK_IMPORTED_MODULE_1__.eventBus.$on('webcam', this.updateWebcam);
+    _app__WEBPACK_IMPORTED_MODULE_1__.eventBus.$on('setScreenShare', this.setScreenShare);
   },
   beforeDestroy: function beforeDestroy() {
     // remove event listener
     EventBus.$off("source", this.updateSource);
     EventBus.$off("webcam", this.updateWebcam);
+    EventBus.$off("setScreenShare", this.setScreenShare);
   },
   methods: {
     // update video source and create URL object
@@ -1948,7 +1958,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(stream);
       var videoTracks = stream.getVideoTracks(); // window.stream = stream;
 
-      this.source = stream; // this.$refs.webcam.srcObject = stream;
+      this.source = stream;
+      this.isWebcam = true;
+      this.isScreenShare = false;
+    },
+    setScreenShare: function setScreenShare() {
+      this.isScreenShare = true;
+      this.isWebcam = false;
     },
     startStream: function startStream() {
       var _this = this;
@@ -1959,11 +1975,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                if (!_this.isWebcam) {
+                  _context.next = 4;
+                  break;
+                }
+
+                _context.next = 3;
                 return (0,_helper__WEBPACK_IMPORTED_MODULE_3__.getPermissions)();
 
-              case 2:
+              case 3:
                 stream = _context.sent;
+
+              case 4:
+                if (!_this.isScreenShare) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 7;
+                return (0,_helper__WEBPACK_IMPORTED_MODULE_3__.getScreenShare)();
+
+              case 7:
+                stream = _context.sent;
+
+              case 8:
                 _this.$refs.webcam.srcObject = stream;
 
                 _this.initializeStreamChannel();
@@ -1972,7 +2007,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 console.log("stream started...");
 
-              case 7:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -2077,7 +2112,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         if (data.answer.sdp) {
           var updatedSignal = _objectSpread(_objectSpread({}, data.answer), {}, {
-            dsp: "".concat(data.answer.sdp, "\n")
+            sdp: "".concat(data.answer.sdp, "\n")
           });
 
           _this4.allPeers[_this4.currentlyContactedUser].getPeer().signal(updatedSignal);
@@ -2126,7 +2161,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           peer.on("close", function () {
             console.log("Broadcaster Peer closed");
           });
-          peer.on("error", function (err) {
+          peer.on("error", function (error) {
+            console.log(error);
             console.log("handle error gracefully");
           });
         }
@@ -2622,14 +2658,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
-    handleSourceChange: function handleSourceChange(e) {
-      console.log("Emmitting files: ", e.target.files);
-      _app__WEBPACK_IMPORTED_MODULE_0__.eventBus.$emit('source', e.target.files[0]);
-    },
     handleWebcamSelect: function handleWebcamSelect(e) {
       var constraints = window.constraints = {
         audio: false,
@@ -2640,6 +2671,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         alert("Browser not supported");
       });
+    },
+    handleScreenShareSelect: function handleScreenShareSelect(e) {
+      console.log('bus');
+      _app__WEBPACK_IMPORTED_MODULE_0__.eventBus.$emit('setScreenShare', e);
     }
   }
 });
@@ -3523,7 +3558,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getPermissions": () => (/* binding */ getPermissions)
+/* harmony export */   "getPermissions": () => (/* binding */ getPermissions),
+/* harmony export */   "getScreenShare": () => (/* binding */ getScreenShare)
 /* harmony export */ });
 var getPermissions = function getPermissions() {
   if (navigator.mediaDevices === undefined) {
@@ -3558,6 +3594,18 @@ var getPermissions = function getPermissions() {
       resolve(presentationStream);
     })["catch"](function (error) {
       reject(error);
+    });
+  });
+};
+var getScreenShare = function getScreenShare() {
+  return new Promise(function (resolve, reject) {
+    navigator.mediaDevices.getDisplayMedia({
+      video: true,
+      audio: true
+    }).then(function (screenShareStream) {
+      resolve(screenShareStream);
+    })["catch"](function (error) {
+      resolve(error);
     });
   });
 };
@@ -59861,15 +59909,31 @@ var render = function() {
     }),
     _vm._v(" "),
     _vm.isHost == _vm.userId
-      ? _c("button", { on: { click: _vm.stopStream } }, [_vm._v("Stop Stream")])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.isHost == _vm.userId
-      ? _c("button", { on: { click: _vm.startStream } }, [
-          _vm._v("Start Stream")
+      ? _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-secondary", on: { click: _vm.stopStream } },
+            [_vm._v("Stop Stream")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              on: { click: _vm.startStream }
+            },
+            [_vm._v("Start Stream")]
+          )
         ])
-      : _c("button", { on: { click: _vm.connectToStream } }, [
-          _vm._v("Connect to Stream")
+      : _c("div", { staticClass: "row justify-content-center" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              on: { click: _vm.connectToStream }
+            },
+            [_vm._v("Connect to Stream")]
+          )
         ])
   ])
 }
@@ -60152,28 +60216,9 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-third",
-              on: { click: _vm.copyPresentationId }
+              on: { click: _vm.handleScreenShareSelect }
             },
-            [_vm._v("Copy Presentation Id")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row mb-3" }, [
-          _c(
-            "label",
-            { staticClass: "btn btn-third", attrs: { for: "source-select" } },
-            [
-              _c("input", {
-                attrs: {
-                  id: "source-select",
-                  type: "file",
-                  hidden: "",
-                  accept: "video/*"
-                },
-                on: { change: _vm.handleSourceChange }
-              }),
-              _vm._v("Select File")
-            ]
+            [_vm._v("Screen Share")]
           )
         ]),
         _vm._v(" "),
