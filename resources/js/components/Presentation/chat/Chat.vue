@@ -155,8 +155,8 @@ export default {
                 channel: this.$props.presentationid,
                 message: {
                     text: this.text,
-                    userId: this.$props.userid ?? uuid,
-                    username: this.$props.username ?? uuid,
+                    userId: this.$props.userid ?? this.uuid,
+                    username: this.$props.username ?? this.uuid,
                     type: 'message'
                 }
             });
